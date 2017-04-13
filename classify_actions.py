@@ -45,6 +45,30 @@ def is_action(sentence):
     else:
         return True
 
+
+def extract_conditional_clauses(sentence):
+    """Function to extract if clauses from a sentence
+
+    This function takes a sentence and returns the conditional and
+    unconditional clauses.
+
+    Args:
+        sentence (String): A sentence from a medical procedure
+
+    Return:
+        A Dict with two key value pairs. 'conditionals' has a list
+            of the conditional clauses. 'nonconditionals' has a
+            list of the rest of the clauses.
+    """
+    tagged_sentence = nlp(sentence)
+
+    conditional_heads = [i.head for i in tagged_sentence if i.text.lower() == 'if']
+    conditional_phrases = [" ".join(j.text for j in i.subtree) for i in conditional_heads]
+
+    print(conditional_phrases)
+
+    # " ".join(map(lambda x: x.text, tagged_cond[0].head.subtree))
+
 if __name__ == '__main__':
     samples = ["Rest the sprained or strained area.",
                "If necessary, use a sling for an arm injury or crutches for a leg or foot injury.",
@@ -65,11 +89,14 @@ if __name__ == '__main__':
                "In severe cases, surgery may be needed.",
                "If the nail is torn, use sterile scissors to cut off rough edges to prevent further injury.",
                "use sterile scissors to cut off rough edges to prevent further injury.",
-               "Use sterile scissors to cut off rough edges if the nail is torn"]
+               "Use sterile scissors to cut off rough edges if the nail is torn",
+               "Make an appointment with a doctor if you still have pain after two weeks of home treatment, if the knee becomes warm, or if you have fever along with a painful, swollen knee."]
 
 
-    for s in samples:
-        print("\n")
-        print(s)
-        print(is_action(s))
+    # for s in samples:
+    #     print("\n")
+    #     print(s)
+    #     print(is_action(s))
+
+    extract_conditional_clauses("Make an appointment with a doctor if you still have pain after two weeks of home treatment, if the knee becomes warm, or if you have fever along with a painful, swollen knee.")
 
