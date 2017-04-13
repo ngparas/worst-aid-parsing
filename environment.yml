@@ -1,3 +1,4 @@
 name: worst-aid-parsing
 dependencies:
 - beautifulsoup4
+- spacy
