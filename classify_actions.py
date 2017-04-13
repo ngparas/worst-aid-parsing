@@ -62,7 +62,10 @@ if __name__ == '__main__':
                "The doctor may want to do X-rays or an MRI to diagnose a severe sprain or strain or rule out a broken bone.",
                "The doctor may need to immobilize the limb or joint with a splint, cast, or other device until healing is complete.",
                "Physical therapy can often be helpful to bring an injured joint back to normal.",
-               "In severe cases, surgery may be needed."]
+               "In severe cases, surgery may be needed.",
+               "If the nail is torn, use sterile scissors to cut off rough edges to prevent further injury.",
+               "use sterile scissors to cut off rough edges to prevent further injury.",
+               "Use sterile scissors to cut off rough edges if the nail is torn"]
 
 
     for s in samples:
