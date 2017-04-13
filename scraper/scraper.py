@@ -9,28 +9,29 @@ def parse_procedure(proc_url):
     soup = BeautifulSoup(data, 'html.parser')
 
     result = parse_title(soup, result)
-    result = parse_table_of_contents(soup, result)
     result = parse_steps(soup, result)
 
     return result
 
 def parse_title(soup, result):
-    title = soup.find('h1', {'itemprop': 'headline'})
-    result['title'] = title.text
-    return result
-
-def parse_table_of_contents(soup, result):
-    table_of_contents = soup.find('aside', {'class': 'in-article-nav'}).ul
-    result['table_of_contents'] = [li.a.text for li in table_of_contents.find_all('li')]
+    title = soup.find('article', {'class': 'article'}).find('header')
+    result['title'] = title.text.strip()
     return result
 
 def parse_steps(soup, result):
-    steps = soup.find('div', {'class': 'article-page'}).find_all('h2')
     result['steps'] = {}
-    for step in steps:
-        substeps = step.parent.find_next_sibling('ul')
-        result['steps'][step.text] = [li.text.strip() for li in substeps.find_all('li')]
+    result['order'] = []
+    unordered_lists = soup.find('div', {'class': 'article-page'}).find_all('ul')
+    for ul in unordered_lists:
+        prev_sibling = ul.previous_sibling
+        while prev_sibling_not_valid(prev_sibling):
+            prev_sibling = prev_sibling.previous_sibling
+        result['steps'][prev_sibling.text.strip()] = [li.text.strip() for li in ul.find_all('li')]
+        result['order'].append(prev_sibling.text.strip())
     return result
+
+def prev_sibling_not_valid(prev_sibling):
+    return prev_sibling == '\n' or prev_sibling.name == 'ul' or any(x in prev_sibling.get('class',[]) for x in ['ad', 'native_ad'])
 
 if __name__ == "__main__":
     url = raw_input('Enter webmd URL: ')
@@ -40,6 +41,11 @@ if __name__ == "__main__":
 
 # Example payload for http://www.webmd.com/first-aid/stroke-treatment
 # {
+#     "order": [
+#         "Call 911 if the person has:",
+#         "1. Note Time When Symptoms First Appeared",
+#         "2. Follow Up"
+#     ],
 #     "steps": {
 #         "1. Note Time When Symptoms First Appeared": [
 #             "Tell emergency personnel the exact time when you first noticed symptoms.",
@@ -59,10 +65,5 @@ if __name__ == "__main__":
 #             "Severe headache"
 #         ]
 #     },
-#     "table_of_contents": [
-#         "Call 911 if the person has:",
-#         "1. Note Time When Symptoms First Appeared",
-#         "2. Follow Up"
-#     ],
 #     "title": "Stroke Treatment"
 # }
