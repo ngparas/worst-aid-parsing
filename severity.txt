@@ -1,0 +1,15 @@
+stable
+dead
+minor
+moderate
+serious
+severe
+critical
+maximal
+undetermined
+good
+fair
+grave
+major
+extreme
+mild
