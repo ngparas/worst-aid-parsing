@@ -27,13 +27,15 @@ def parse_steps(soup, result):
         while prev_sibling_not_valid(prev_sibling):
             prev_sibling = prev_sibling.previous_sibling
         # result['steps'][prev_sibling.text.strip()] = [li.text.strip() for li in ul.find_all('li')]
-        result['steps'][prev_sibling.text.strip()] = []
+        if prev_sibling.text.strip() not in result['steps']:
+            result['steps'][prev_sibling.text.strip()] = []
+            result['order'].append(prev_sibling.text.strip())
         for li in ul.find_all('li'):
             result['steps'][prev_sibling.text.strip()].append({
                 'text': li.text.strip(),
-                'links': [{'text': a.text.strip(), 'href': a['href']} for a in li.find_all('a')]
+                'links': [{a.text.strip().lower(): a['href']} for a in li.find_all('a')]
             })
-        result['order'].append(prev_sibling.text.strip())
+
     return result
 
 def prev_sibling_not_valid(prev_sibling):
