@@ -1,0 +1,18 @@
+asylum
+care home
+clinic
+day care
+day center
+field hospital
+general hospital
+general practice
+halfway house
+health center
+hospice
+hospital
+institution
+psychiatric hospital
+sanatorium
+sanitarium
+spa
+teaching hospital
