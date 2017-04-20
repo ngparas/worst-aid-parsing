@@ -4,7 +4,7 @@
             "Call 911 NOW if:", 
             "1. Have Your Child Rest", 
             "2.Treat Symptoms", 
-            "Call your child\u2019s doctor immediately if your child has any of the following:"
+            "Call your child's doctor immediately if your child has any of the following:"
         ], 
         "steps": {
             "1. Have Your Child Rest": [
@@ -40,7 +40,7 @@
                             "abdominal pain": "http://www.webmd.com/pain-management/guide/abdominal-pain-causes-treatments"
                         }
                     ], 
-                    "text": "Ask your child\u2019s doctor before giving any medicine for abdominal pain. Drugs can mask or worsen the pain."
+                    "text": "Ask your child's doctor before giving any medicine for abdominal pain. Drugs can mask or worsen the pain."
                 }
             ], 
             "Call 911 NOW if:": [
@@ -49,7 +49,7 @@
                     "text": "The child is not moving or is too weak to stand."
                 }
             ], 
-            "Call your child\u2019s doctor immediately if your child has any of the following:": [
+            "Call your child's doctor immediately if your child has any of the following:": [
                 {
                     "links": [
                         {
@@ -67,7 +67,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Severe or rapidly worsening abdominal pain or pain that doesn\u2019t go away within 24 hours"
+                    "text": "Severe or rapidly worsening abdominal pain or pain that doesn't go away within 24 hours"
                 }, 
                 {
                     "links": [], 
@@ -1044,7 +1044,7 @@
     "http://www.webmd.com/first-aid/asthma-in-pregnancy-treatment": {
         "order": [
             "1. Symptoms of an acute asthma attack in pregnancy include:", 
-            "2. Follow the Woman\u2019s Asthma Plan, if Possible", 
+            "2. Follow the Woman's Asthma Plan, if Possible", 
             "If the woman doesn't have an asthma action plan:", 
             "4. Use Inhaler With a Spacer, if Possible", 
             "5. Use Inhaler Without a Spacer, if Necessary", 
@@ -1083,7 +1083,7 @@
                     "text": "Decrease in fetal kick count if the baby is in distress"
                 }
             ], 
-            "2. Follow the Woman\u2019s Asthma Plan, if Possible": [
+            "2. Follow the Woman's Asthma Plan, if Possible": [
                 {
                     "links": [
                         {
@@ -1168,7 +1168,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "If there\u2019s still little or no improvement, continue giving four puffs every four minutes until ambulance arrives."
+                    "text": "If there's still little or no improvement, continue giving four puffs every four minutes until ambulance arrives."
                 }, 
                 {
                     "links": [], 
@@ -1229,7 +1229,7 @@
                             "first aid": "http://www.webmd.com/a-to-z-guides/wound-care-10/slideshow-first-aid-essentials"
                         }
                     ], 
-                    "text": "If woman doesn't have an inhaler, use one from a first aid kit or borrow someone else\u2019s."
+                    "text": "If woman doesn't have an inhaler, use one from a first aid kit or borrow someone else's."
                 }
             ]
         }, 
@@ -1238,7 +1238,7 @@
     "http://www.webmd.com/first-aid/asthma-treatment": {
         "order": [
             "Call 911", 
-            "1. Follow the Person\u2019s Asthma Plan, if Possible", 
+            "1. Follow the Person's Asthma Plan, if Possible", 
             "If the person doesn't have an asthma plan:", 
             "3. Use Inhaler With a Spacer, if Possible", 
             "4. Use Inhaler Without a Spacer, if Necessary", 
@@ -1247,7 +1247,7 @@
             "7. Follow Up"
         ], 
         "steps": {
-            "1. Follow the Person\u2019s Asthma Plan, if Possible": [
+            "1. Follow the Person's Asthma Plan, if Possible": [
                 {
                     "links": [
                         {
@@ -1338,7 +1338,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "If there\u2019s still little or no improvement, give four puffs every four minutes until ambulance arrives. If the person is having a severe attack, give up to six to eight puffs every five minutes."
+                    "text": "If there's still little or no improvement, give four puffs every four minutes until ambulance arrives. If the person is having a severe attack, give up to six to eight puffs every five minutes."
                 }
             ], 
             "6. Monitor the Person Until Help Arrives": [
@@ -1352,7 +1352,7 @@
                             "wheezing": "http://www.webmd.com/asthma/tc/asthma-and-wheezing-topic-overview"
                         }
                     ], 
-                    "text": "Do not assume the person\u2019s asthma is improving if you no longer hear wheezing."
+                    "text": "Do not assume the person's asthma is improving if you no longer hear wheezing."
                 }
             ], 
             "7. Follow Up": [
@@ -1394,7 +1394,7 @@
                             "first aid": "http://www.webmd.com/a-to-z-guides/wound-care-10/slideshow-first-aid-essentials"
                         }
                     ], 
-                    "text": "If the person doesn\u2019t have an inhaler, use one from a first aid kit or borrow someone else\u2019s."
+                    "text": "If the person doesn't have an inhaler, use one from a first aid kit or borrow someone else's."
                 }
             ]
         }, 
@@ -1462,11 +1462,11 @@
                             "heart": "http://www.webmd.com/heart/picture-of-the-heart"
                         }
                     ], 
-                    "text": "After 2 minutes of CPR, check the person\u2019s heart rhythm. If it\u2019s still absent or irregular, give another shock."
+                    "text": "After 2 minutes of CPR, check the person's heart rhythm. If it's still absent or irregular, give another shock."
                 }, 
                 {
                     "links": [], 
-                    "text": "If a shock isn\u2019t needed, continue CPR until emergency help arrives or the person begins to move."
+                    "text": "If a shock isn't needed, continue CPR until emergency help arrives or the person begins to move."
                 }, 
                 {
                     "links": [], 
@@ -1506,7 +1506,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Push \u201cAnalyze\u201d button."
+                    "text": "Push \"Analyze\" button."
                 }, 
                 {
                     "links": [], 
@@ -1514,7 +1514,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Push \u201cShock\u201d button."
+                    "text": "Push \"Shock\" button."
                 }, 
                 {
                     "links": [], 
@@ -1717,7 +1717,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Fever over 101\u00ba F"
+                    "text": "Fever over 101 degrees F"
                 }, 
                 {
                     "links": [
@@ -1970,7 +1970,7 @@
                             "blister": "http://www.webmd.com/skin-problems-and-treatments/ss/slideshow-blisters"
                         }
                     ], 
-                    "text": "Try not to put pressure on the area. If the\u00a0blister is in a pressure area such as the bottom of the foot, put a donut-shaped moleskin on it."
+                    "text": "Try not to put pressure on the area. If the blister is in a pressure area such as the bottom of the foot, put a donut-shaped moleskin on it."
                 }
             ], 
             "2. For a Blister That Has Popped": [
@@ -1988,7 +1988,7 @@
                             "skin": "http://www.webmd.com/skin-problems-and-treatments/picture-of-the-skin"
                         }
                     ], 
-                    "text": "Smooth down the the\u00a0skin flap that remains."
+                    "text": "Smooth down the the skin flap that remains."
                 }, 
                 {
                     "links": [], 
@@ -2039,7 +2039,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Wash the blister again and pat dry. Don\u2019t remove the skin over the blister."
+                    "text": "Wash the blister again and pat dry. Don't remove the skin over the blister."
                 }, 
                 {
                     "links": [], 
@@ -2115,7 +2115,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "You suspect an injury to the person\u2019s head, neck, or back"
+                    "text": "You suspect an injury to the person's head, neck, or back"
                 }, 
                 {
                     "links": [
@@ -2650,7 +2650,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "If no materials are available, place one hand behind the person\u2019s knee and your other arm along the top of the thigh, so your hand is just below the pelvic area."
+                    "text": "If no materials are available, place one hand behind the person's knee and your other arm along the top of the thigh, so your hand is just below the pelvic area."
                 }
             ], 
             "5. Follow Up": [
@@ -3198,7 +3198,7 @@
             "2. Get Help": [
                 {
                     "links": [], 
-                    "text": "If you have severe pain, can\u2019t walk, the toe looks bent or deformed, or the pain lasts for a long time, see a doctor."
+                    "text": "If you have severe pain, can't walk, the toe looks bent or deformed, or the pain lasts for a long time, see a doctor."
                 }
             ], 
             "3. Follow Up": [
@@ -3303,7 +3303,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "You can\u2019t move a joint"
+                    "text": "You can't move a joint"
                 }, 
                 {
                     "links": [], 
@@ -3455,7 +3455,7 @@
                             "eyes": "http://www.webmd.com/eye-health/ss/slideshow-eye-conditions-overview"
                         }
                     ], 
-                    "text": "Have the person immediately rinse the eye or eyes under a faucet, in a gentle shower, or with a clean container of water. Position the person\u2019s face so that the injured eye is down and to the side. Avoid spraying a high-pressure water stream into the eye or eyes."
+                    "text": "Have the person immediately rinse the eye or eyes under a faucet, in a gentle shower, or with a clean container of water. Position the person's face so that the injured eye is down and to the side. Avoid spraying a high-pressure water stream into the eye or eyes."
                 }, 
                 {
                     "links": [], 
@@ -3527,7 +3527,7 @@
     "http://www.webmd.com/first-aid/chest-injury-treatment": {
         "order": [
             "Call 911", 
-            "If the person\u2019s breathing has stopped or seems dangerously weak:", 
+            "If the person's breathing has stopped or seems dangerously weak:", 
             "2. Cover an Open Wound", 
             "3. Stop Bleeding, if Necessary", 
             "4. Position Person to Make Breathing Easier", 
@@ -3607,7 +3607,7 @@
                     "text": "Even if there are no external wounds, there may be internal damage."
                 }
             ], 
-            "If the person\u2019s breathing has stopped or seems dangerously weak:": [
+            "If the person's breathing has stopped or seems dangerously weak:": [
                 {
                     "links": [
                         {
@@ -3647,7 +3647,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Inform the person\u2019s doctor about the chest pain and ER visit."
+                    "text": "Inform the person's doctor about the chest pain and ER visit."
                 }
             ], 
             "If the person gets angina and has been prescribed nitroglycerin:": [
@@ -3691,7 +3691,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Inform the person\u2019s doctor about the chest pain and ER visit."
+                    "text": "Inform the person's doctor about the chest pain and ER visit."
                 }
             ], 
             "If the person has been diagnosed with chronic stable angina:": [
@@ -3762,7 +3762,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Place your clenched fist just above the person\u2019s navel. Grab your fist with your other hand."
+                    "text": "Place your clenched fist just above the person's navel. Grab your fist with your other hand."
                 }, 
                 {
                     "links": [], 
@@ -4245,7 +4245,7 @@
                             "pedialyte": "http://www.webmd.com/drugs/2/drug-11147/pedialyte+oral/details"
                         }
                     ], 
-                    "text": "Ask your doctor what fluids are best for you or your child. Here are some basic tips: Give an adult plenty of clear fluid, like fruit juices, soda, sports drinks and clear broth. Avoid milk or milk-based products, alcohol, apple juice, and caffeine while you have diarrhea and for 3 to 5 days after you get better. They may make diarrhea worse.Give a child or infant frequent sips of a rehydration solution such as Pedialyte, CeraLyte, or Infalyte. Do not add salt tablets to a baby\u2019s bottle.Make sure the person drinks more fluids than they are losing through diarrhea. If they are unable to keep up with their losses, call a doctor."
+                    "text": "Ask your doctor what fluids are best for you or your child. Here are some basic tips: Give an adult plenty of clear fluid, like fruit juices, soda, sports drinks and clear broth. Avoid milk or milk-based products, alcohol, apple juice, and caffeine while you have diarrhea and for 3 to 5 days after you get better. They may make diarrhea worse.Give a child or infant frequent sips of a rehydration solution such as Pedialyte, CeraLyte, or Infalyte. Do not add salt tablets to a baby's bottle.Make sure the person drinks more fluids than they are losing through diarrhea. If they are unable to keep up with their losses, call a doctor."
                 }, 
                 {
                     "links": [
@@ -4267,7 +4267,7 @@
                             "pedialyte": "http://www.webmd.com/drugs/2/drug-11147/pedialyte+oral/details"
                         }
                     ], 
-                    "text": "Give a child or infant frequent sips of a rehydration solution such as Pedialyte, CeraLyte, or Infalyte. Do not add salt tablets to a baby\u2019s bottle."
+                    "text": "Give a child or infant frequent sips of a rehydration solution such as Pedialyte, CeraLyte, or Infalyte. Do not add salt tablets to a baby's bottle."
                 }, 
                 {
                     "links": [], 
@@ -4320,13 +4320,13 @@
                             "medications": "http://www.webmd.com/drugs/index-drugs.aspx"
                         }, 
                         {
-                            "traveler\u2019s diarrhea": "http://www.webmd.com/a-to-z-guides/travelers-diarrhea-topic-overview"
+                            "traveler's diarrhea": "http://www.webmd.com/a-to-z-guides/travelers-diarrhea-topic-overview"
                         }, 
                         {
                             "bowel movement": "http://www.webmd.com/women/features/digestive-problems"
                         }
                     ], 
-                    "text": "Call a doctor right away if:\n\nYou suspect that you or your child is dehydrated.\nAn infant 3 months old or younger has vomiting or diarrhea.\nThere is blood or mucus in the stool, or the stool is black.\nYou think the person needs over-the-counter diarrhea medication; some kinds of diarrhea can get worse with anti-diarrheal medications.\nYou think the person has traveler\u2019s diarrhea or drank contaminated water.\nThe person is taking an antibiotic that may be causing the diarrhea.\nThere is stomach pain that is not relieved by having a bowel movement.\nThere is any fever.\nThe person is losing more fluid in his stool than he can replace by drinking fluids."
+                    "text": "Call a doctor right away if:\n\nYou suspect that you or your child is dehydrated.\nAn infant 3 months old or younger has vomiting or diarrhea.\nThere is blood or mucus in the stool, or the stool is black.\nYou think the person needs over-the-counter diarrhea medication; some kinds of diarrhea can get worse with anti-diarrheal medications.\nYou think the person has traveler's diarrhea or drank contaminated water.\nThe person is taking an antibiotic that may be causing the diarrhea.\nThere is stomach pain that is not relieved by having a bowel movement.\nThere is any fever.\nThe person is losing more fluid in his stool than he can replace by drinking fluids."
                 }, 
                 {
                     "links": [], 
@@ -4362,10 +4362,10 @@
                 {
                     "links": [
                         {
-                            "traveler\u2019s diarrhea": "http://www.webmd.com/a-to-z-guides/travelers-diarrhea-topic-overview"
+                            "traveler's diarrhea": "http://www.webmd.com/a-to-z-guides/travelers-diarrhea-topic-overview"
                         }
                     ], 
-                    "text": "You think the person has traveler\u2019s diarrhea or drank contaminated water."
+                    "text": "You think the person has traveler's diarrhea or drank contaminated water."
                 }, 
                 {
                     "links": [], 
@@ -4395,11 +4395,11 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Diarrhea in an adult worsens or doesn\u2019t clear up after 2 or 3 days"
+                    "text": "Diarrhea in an adult worsens or doesn't clear up after 2 or 3 days"
                 }, 
                 {
                     "links": [], 
-                    "text": "A child doesn\u2019t feel better after 24 hours"
+                    "text": "A child doesn't feel better after 24 hours"
                 }
             ], 
             "Call 911 if the person or child:": [
@@ -4451,10 +4451,10 @@
                 {
                     "links": [
                         {
-                            "traveler\u2019s diarrhea": "http://www.webmd.com/a-to-z-guides/travelers-diarrhea-topic-overview"
+                            "traveler's diarrhea": "http://www.webmd.com/a-to-z-guides/travelers-diarrhea-topic-overview"
                         }
                     ], 
-                    "text": "You think the person has traveler\u2019s diarrhea or drank contaminated water."
+                    "text": "You think the person has traveler's diarrhea or drank contaminated water."
                 }, 
                 {
                     "links": [], 
@@ -5244,7 +5244,7 @@
         "order": [
             "Call 911 now if the person:", 
             "1. Stop Activity", 
-            "2. Follow the Person\u2019s Asthma Plan, if Possible", 
+            "2. Follow the Person's Asthma Plan, if Possible", 
             "3. Give Asthma First Aid", 
             "If the person doesn't have an asthma plan:", 
             "4. Resume Activity When Safe", 
@@ -5258,7 +5258,7 @@
                     "text": "Have the person sit down and rest."
                 }
             ], 
-            "2. Follow the Person\u2019s Asthma Plan, if Possible": [
+            "2. Follow the Person's Asthma Plan, if Possible": [
                 {
                     "links": [
                         {
@@ -5369,7 +5369,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Notify the child\u2019s parents."
+                    "text": "Notify the child's parents."
                 }, 
                 {
                     "links": [], 
@@ -6023,13 +6023,13 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "If the finger is bent or deformed, don\u2019t try to straighten it. It may be broken."
+                    "text": "If the finger is bent or deformed, don't try to straighten it. It may be broken."
                 }
             ], 
             "2. Get Help": [
                 {
                     "links": [], 
-                    "text": "See a doctor right away. You\u2019ll need X-rays and procedures to realign the finger."
+                    "text": "See a doctor right away. You'll need X-rays and procedures to realign the finger."
                 }
             ], 
             "3. Follow Up": [
@@ -6135,7 +6135,7 @@
                             "tetanus shot": "http://www.webmd.com/vaccines/tetanus-vaccine"
                         }
                     ], 
-                    "text": "The injury is a puncture or open wound and you haven\u2019t had a tetanus shot in the last 10 years."
+                    "text": "The injury is a puncture or open wound and you haven't had a tetanus shot in the last 10 years."
                 }, 
                 {
                     "links": [], 
@@ -6186,7 +6186,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Don\u2019t eat fried, greasy, spicy, or sweet foods."
+                    "text": "Don't eat fried, greasy, spicy, or sweet foods."
                 }, 
                 {
                     "links": [
@@ -6197,7 +6197,7 @@
                             "medication": "http://www.webmd.com/drugs/index-drugs.aspx"
                         }
                     ], 
-                    "text": "Don\u2019t take anti-nausea or anti-diarrhea medication without asking your doctor. They may make some kinds of diarrhea worse. Your doctor may give you anti-nausea medication if you are at risk of being dehydrated."
+                    "text": "Don't take anti-nausea or anti-diarrhea medication without asking your doctor. They may make some kinds of diarrhea worse. Your doctor may give you anti-nausea medication if you are at risk of being dehydrated."
                 }
             ], 
             "2. Prevent Dehydration": [
@@ -6403,7 +6403,7 @@
                             "mouth": "http://www.webmd.com/oral-health/ss/slideshow-mouth-problems"
                         }
                     ], 
-                    "text": "Do not try to grab or pull an object that is stuck up a child\u2019s nose. You can try gently closing the unaffected nostril. Blow a puff of air into the child's mouth. Repeat as necessary."
+                    "text": "Do not try to grab or pull an object that is stuck up a child's nose. You can try gently closing the unaffected nostril. Blow a puff of air into the child's mouth. Repeat as necessary."
                 }, 
                 {
                     "links": [], 
@@ -7533,7 +7533,7 @@
                             "body temperature": "http://www.webmd.com/first-aid/body-temperature"
                         }
                     ], 
-                    "text": "Body temperature above 103\u00b0 F"
+                    "text": "Body temperature above 103 degrees  F"
                 }, 
                 {
                     "links": [
@@ -8373,7 +8373,7 @@
             "For a sting in tropical waters -- especially from the Hawaiian box jellyfish or a Portuguese man-of-war:": [
                 {
                     "links": [], 
-                    "text": "After removing the tentacles, immerse the affected arm or leg immediately in hot water at 40 to 45\u00b0C (104 to 113\u00b0F) for at least twenty minutes. A hot shower can be used instead for other parts of the body."
+                    "text": "After removing the tentacles, immerse the affected arm or leg immediately in hot water at 40 to 45 degrees C (104 to 113 degrees F) for at least twenty minutes. A hot shower can be used instead for other parts of the body."
                 }, 
                 {
                     "links": [], 
@@ -8391,7 +8391,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Next, soak the area in hot water for at least 20 minutes if possible. Cold packs can be used instead if the area can\u2019t be soaked in hot water."
+                    "text": "Next, soak the area in hot water for at least 20 minutes if possible. Cold packs can be used instead if the area can't be soaked in hot water."
                 }
             ], 
             "For less severe sting:": [
@@ -8641,7 +8641,7 @@
             "Give the person a high-sugar food such as:": [
                 {
                     "links": [], 
-                    "text": "\u00bd cup fruit juice"
+                    "text": "1/2 cup fruit juice"
                 }, 
                 {
                     "links": [], 
@@ -8887,7 +8887,7 @@
             "1. Descend to Lower Altitude": [
                 {
                     "links": [], 
-                    "text": "For mild acute mountain sickness, the person may be able to stay at current altitude to see if his or her body adjusts. If symptoms don\u2019t get better in 24 to 48 hours or if they get worse, the person should go down to a lower altitude and seek immediate medical care."
+                    "text": "For mild acute mountain sickness, the person may be able to stay at current altitude to see if his or her body adjusts. If symptoms don't get better in 24 to 48 hours or if they get worse, the person should go down to a lower altitude and seek immediate medical care."
                 }, 
                 {
                     "links": [], 
@@ -9062,7 +9062,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "The person heard a \u201cpopping\u201d sound or can\u2019t walk, and there is no other way that they can safely and quickly be transported to a medical facility."
+                    "text": "The person heard a \"popping\" sound or can't walk, and there is no other way that they can safely and quickly be transported to a medical facility."
                 }
             ], 
             "1. Control Swelling and Prevent Further Injury With PRICE": [
@@ -9518,11 +9518,11 @@
                             "tobacco": "http://www.webmd.com/smoking-cessation/stop-smoking-16/break-cigarette-habit/slideshow-tips-quit-smoking"
                         }
                     ], 
-                    "text": "Don\u2019t smoke or use tobacco products. Nicotine can cause palpitations."
+                    "text": "Don't smoke or use tobacco products. Nicotine can cause palpitations."
                 }, 
                 {
                     "links": [], 
-                    "text": "Don\u2019t drink alcohol."
+                    "text": "Don't drink alcohol."
                 }, 
                 {
                     "links": [
@@ -9563,7 +9563,7 @@
                             "panic attacks": "http://www.webmd.com/anxiety-panic/guide/panic-attack-symptoms"
                         }
                     ], 
-                    "text": "Call your doctor for an appointment. Often, palpitations aren\u2019t serious, but they can be related to abnormal heart valves, heart rhythm problems, or panic attacks."
+                    "text": "Call your doctor for an appointment. Often, palpitations aren't serious, but they can be related to abnormal heart valves, heart rhythm problems, or panic attacks."
                 }, 
                 {
                     "links": [], 
@@ -9648,7 +9648,7 @@
             "Seek medical help as soon as possible if:": [
                 {
                     "links": [], 
-                    "text": "Symptoms don\u2019t improve after 2 to 3 days."
+                    "text": "Symptoms don't improve after 2 to 3 days."
                 }, 
                 {
                     "links": [
@@ -9772,7 +9772,7 @@
                             "douching": "http://www.webmd.com/women/guide/vaginal-douching-helpful-or-harmful"
                         }
                     ], 
-                    "text": "Don\u2019t insert anything into the vagina. Avoid sex, tampons, or douching while you\u2019re bleeding."
+                    "text": "Don't insert anything into the vagina. Avoid sex, tampons, or douching while you're bleeding."
                 }
             ], 
             "3. Get Help": [
@@ -9782,7 +9782,7 @@
                             "health care": "http://www.webmd.com/health-insurance/default.htm"
                         }
                     ], 
-                    "text": "Call your health care provider immediately to find out if you should go the hospital or doctor\u2019s office."
+                    "text": "Call your health care provider immediately to find out if you should go the hospital or doctor's office."
                 }, 
                 {
                     "links": [
@@ -10832,7 +10832,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Otherwise, if comfortable to do so, put the affected forearm in a sling with elbow at 90\u00b0 angle."
+                    "text": "Otherwise, if comfortable to do so, put the affected forearm in a sling with elbow at 90 degrees  angle."
                 }
             ], 
             "3. Control Swelling": [
@@ -12562,7 +12562,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Use compresses if running water isn\u2019t available."
+                    "text": "Use compresses if running water isn't available."
                 }, 
                 {
                     "links": [], 
@@ -12570,7 +12570,7 @@
                 }, 
                 {
                     "links": [], 
-                    "text": "Use compresses if running water isn\u2019t available."
+                    "text": "Use compresses if running water isn't available."
                 }, 
                 {
                     "links": [
@@ -12578,7 +12578,7 @@
                             "body temperature": "http://www.webmd.com/first-aid/body-temperature"
                         }
                     ], 
-                    "text": "Don\u2019t apply ice. It can lower body temperature and cause further damage."
+                    "text": "Don't apply ice. It can lower body temperature and cause further damage."
                 }, 
                 {
                     "links": [
@@ -12586,7 +12586,7 @@
                             "blisters": "http://www.webmd.com/skin-problems-and-treatments/ss/slideshow-blisters"
                         }
                     ], 
-                    "text": "Don\u2019t break blisters or apply butter or ointments, which can cause infection."
+                    "text": "Don't break blisters or apply butter or ointments, which can cause infection."
                 }
             ], 
             "1. Stop Burning Immediately": [

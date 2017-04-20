@@ -1,8 +1,13 @@
-import requests
 import json
+import requests
 from bs4 import BeautifulSoup
 
 def parse_procedure(proc_url):
+    """Parse and return the result of a procedure url.
+
+    Keyword arguments:
+    proc_url -- the procedure url
+    """
     result = {}
     req = requests.get(proc_url)
     data = req.text
@@ -14,64 +19,66 @@ def parse_procedure(proc_url):
     return result
 
 def parse_title(soup, result):
+    """Parse and return the result with the title parsed and added.
+
+    Keyword arguments:
+    soup -- the BeautifulSoup object
+    result -- the result dictionary that is also returned
+    """
     title = soup.find('article', {'class': 'article'}).find('header')
-    result['title'] = title.text.strip()
+    result['title'] = format_text(title.text)
     return result
 
 def parse_steps(soup, result):
+    """Parse and return the result with the steps parsed and added.
+
+    Keyword arguments:
+    soup -- the BeautifulSoup object
+    result -- the result dictionary that is also returned
+    """
     result['steps'] = {}
     result['order'] = []
     unordered_lists = soup.find('div', {'class': 'article-page'}).find_all('ul')
-    for ul in unordered_lists:
-        prev_sibling = ul.previous_sibling
+    for ul_item in unordered_lists:
+        prev_sibling = ul_item.previous_sibling
         while prev_sibling_not_valid(prev_sibling):
             prev_sibling = prev_sibling.previous_sibling
-        # result['steps'][prev_sibling.text.strip()] = [li.text.strip() for li in ul.find_all('li')]
-        if prev_sibling.text.strip() not in result['steps']:
-            result['steps'][prev_sibling.text.strip()] = []
-            result['order'].append(prev_sibling.text.strip())
-        for li in ul.find_all('li'):
-            result['steps'][prev_sibling.text.strip()].append({
-                'text': li.text.strip(),
-                'links': [{a.text.strip().lower(): a['href']} for a in li.find_all('a')]
+        if format_text(prev_sibling.text) not in result['steps']:
+            result['steps'][format_text(prev_sibling.text)] = []
+            result['order'].append(format_text(prev_sibling.text))
+        for li_item in ul_item.find_all('li'):
+            result['steps'][format_text(prev_sibling.text)].append({
+                'text': format_text(li_item.text),
+                'links': [{format_text(a.text).lower(): a['href']} for a in li_item.find_all('a')]
             })
-
     return result
 
+def format_text(text):
+    """Return formatted text (used for text parsed from the webpage).
+
+    Keyword arguments:
+    text -- a string to be modified and returned
+    """
+    return (text.strip()
+            .replace(u"\u2019", "'")
+            .replace(u"\u00a0", " ")
+            .replace(u"\u201c", '"')
+            .replace(u"\u201d", '"')
+            .replace(u"\u00b0", " degrees ")
+            .replace(u"\u00ba", " degrees")
+            .replace(u"\u00bd", "1/2"))
+
 def prev_sibling_not_valid(prev_sibling):
-    return prev_sibling == '\n' or prev_sibling.name == 'ul' or any(x in prev_sibling.get('class',[]) for x in ['ad', 'native_ad'])
+    """Return a bool determining if the previous sibling is not a valid header.
+
+    Keyword arguments:
+    prev_sibling -- the previous sibling in the DOM to test
+    """
+    return (prev_sibling == '\n' or
+            prev_sibling.name == 'ul' or
+            any(x in prev_sibling.get('class', []) for x in ['ad', 'native_ad']))
 
 if __name__ == "__main__":
     url = raw_input('Enter webmd URL: ')
     result = parse_procedure(url)
-    # JSON payload, TODO: save to db
     print json.dumps(result, indent=4, sort_keys=True)
-
-# Example payload for http://www.webmd.com/first-aid/stroke-treatment
-# {
-#     "order": [
-#         "Call 911 if the person has:",
-#         "1. Note Time When Symptoms First Appeared",
-#         "2. Follow Up"
-#     ],
-#     "steps": {
-#         "1. Note Time When Symptoms First Appeared": [
-#             "Tell emergency personnel the exact time when you first noticed symptoms.",
-#             "Depending on the type of stroke, there is a medicine that may reduce long-term effects if given within four and a half hours of the first symptom appearing. Sooner is better.",
-#             "If the person is diabetic, check the blood glucose (sugar) level. Treat low glucose with a glucose tablet, glass of orange juice or other sugary drink or food, or a glucagon injection (if the person is not able to swallow)."
-#         ],
-#         "2. Follow Up": [
-#             "At the hospital, a doctor will examine the person and run tests to confirm the diagnosis and to see if the stroke was caused by clots or from bleeding in the brain. Tests may include an MRI or a CT scan.",
-#             "Treatment may include medication, lifestyle changes, and possibly surgery."
-#         ],
-#         "Call 911 if the person has:": [
-#             "Numbness or weakness of the face, arm, or legs -- especially on just one side of the body",
-#             "Slurred or unusual speech",
-#             "Trouble seeing in one or both eyes",
-#             "Trouble walking, dizziness, or balance problems",
-#             "Sudden confusion",
-#             "Severe headache"
-#         ]
-#     },
-#     "title": "Stroke Treatment"
-# }
