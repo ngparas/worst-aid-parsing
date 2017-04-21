@@ -1,5 +1,6 @@
 """Classify Statements as either Actions, Conditionals, or Informational
 """
+import re
 
 import spacy
 
@@ -45,7 +46,6 @@ def is_action(sentence):
     else:
         return True
 
-
 def extract_conditional_clauses(sentence):
     """Function to extract if clauses from a sentence
 
@@ -61,13 +61,43 @@ def extract_conditional_clauses(sentence):
             list of the rest of the clauses.
     """
     tagged_sentence = nlp(sentence)
+    tagged_sentence_text = tagged_sentence.text
 
-    conditional_heads = [i.head for i in tagged_sentence if i.text.lower() == 'if']
+    excluded_clauses = ['if necessary',
+                        'if possible']
+
+    conditional_heads = [i.head for i in tagged_sentence if i.text.lower() in ['if', 'unless', 'while', 'when']]
     conditional_phrases = [" ".join(j.text for j in i.subtree) for i in conditional_heads]
 
-    print(conditional_phrases)
+    # much efficient, very code
+    cond_results = []
+    for i in conditional_phrases:
+        if sum(1 for j in conditional_phrases if i in j) == 1:
+            if i.lower() not in excluded_clauses:
 
-    # " ".join(map(lambda x: x.text, tagged_cond[0].head.subtree))
+                cond_results.append(i.replace(" ,", ","))
+                # Found conditional clauses, now get the rest of it
+
+    min_match_index = None
+    max_match_index = None
+    for clause in cond_results:
+        match = re.search(clause, tagged_sentence_text)
+        if match is not None:
+            if min_match_index is None or match.start() < min_match_index:
+                min_match_index = match.start()
+            if max_match_index is None or match.end() > max_match_index:
+                max_match_index = match.end()
+
+    # subset string to stuff outside of matches
+    # TODO : be more clever about this
+    if min_match_index is None or max_match_index is None:
+        rest = tagged_sentence_text
+    else:
+        rest = tagged_sentence_text[:min_match_index] + tagged_sentence_text[max_match_index:]
+        rest = rest.replace(" ,", ",").replace(" .", ".")
+
+    return {"conditionals": cond_results,
+            "nonconditionals": rest}
 
 if __name__ == '__main__':
     samples = ["Rest the sprained or strained area.",
@@ -100,3 +130,7 @@ if __name__ == '__main__':
 
     extract_conditional_clauses("Make an appointment with a doctor if you still have pain after two weeks of home treatment, if the knee becomes warm, or if you have fever along with a painful, swollen knee.")
 
+    for s in samples:
+        print(s)
+        print(extract_conditional_clauses(s))
+        print('\n')
