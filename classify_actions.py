@@ -91,7 +91,7 @@ def extract_conditional_clauses(sentence):
         if sum(1 for j in conditional_phrases if i in j) == 1:
             if i.lower() not in excluded_clauses:
 
-                cond_results.append(i.replace(" ,", ","))
+                cond_results.append(i.replace(" ,", ",").replace(" .", "."))
                 # Found conditional clauses, now get the rest of it
 
     min_match_index = None
