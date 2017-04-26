@@ -65,10 +65,22 @@ def parse_procedure(procedure):
     parsed_procedure = []
 
     for step in procedure.get('order'):
-        parsed_procedure += parse_step(step)
+        # handling "Call 911" case
+        additional_text = "If "
+        action_text = "Call 911"
 
-        for substep in procedure.get('steps').get(step):
-            parsed_procedure += parse_step(substep.get('text'))
+        if "911" in step:
+            for substep in procedure.get('steps').get(step):
+                new_text = additional_text + substep.get('text')
+                parsed_procedure += parse_step(new_text)
+
+            parsed_procedure += parse_step("Call 911")
+
+        else:
+            parsed_procedure += parse_step(step)
+
+            for substep in procedure.get('steps').get(step):
+                parsed_procedure += parse_step(substep.get('text'))
 
     return parsed_procedure
         
@@ -77,6 +89,7 @@ def parse_procedure(procedure):
 def main():
     results = load_results('list-of-pages-webmd-results.json')
     sample_key = list(results.keys())[0]
+    print(sample_key)
     procedure = results.get(sample_key)
 
     parsed_procedure = parse_procedure(procedure)
