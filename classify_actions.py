@@ -7,6 +7,22 @@ import spacy
 # use some garbage globals until we know what this app will look like
 nlp = spacy.load('en')
 
+def split_sentences(text):
+    """Util function to parse sentences
+
+    This function uses Spacy to parse sentences
+
+    Args:
+        text (string): a text string to be split into sentences
+   
+    Return:
+        A list of strings
+    """
+
+    parsed_text = nlp(text)
+    return [i.text for i in parsed_text.sents]
+
+
 def is_action(sentence):
     """Predicate to determine if a sentence is an action
 
@@ -66,7 +82,7 @@ def extract_conditional_clauses(sentence):
     excluded_clauses = ['if necessary',
                         'if possible']
 
-    conditional_heads = [i.head for i in tagged_sentence if i.text.lower() in ['if', 'unless', 'while', 'when']]
+    conditional_heads = [i.head for i in tagged_sentence if i.text.lower() in ['if']]
     conditional_phrases = [" ".join(j.text for j in i.subtree) for i in conditional_heads]
 
     # much efficient, very code
