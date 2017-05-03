@@ -69,22 +69,12 @@ def parse_procedure(procedure):
     parsed_procedure = []
 
     for step in procedure.get('order'):
-        # handling "Call 911" case
-        additional_text = "If "
-        action_text = "Call 911"
-
-        # if "911" in step:
-        #     for substep in procedure.get('steps').get(step):
-        #         new_text = additional_text + substep.get('text')
-        #         parsed_procedure += parse_step(new_text)
-        #
-        #     parsed_procedure += parse_step("Call 911")
         if is_911(step):
             parsed_procedure += extract_911_clauses(step)
             for substep in procedure.get('steps').get(step):
                 parsed_procedure.append({'text': substep.get('text'),
                                          'type': '911-conditional-list-item'})
-        if is_doctor(step):
+        elif is_doctor(step):
             parsed_procedure += extract_doctor_clauses(step)
             for substep in procedure.get('steps').get(step):
                 parsed_procedure.append({'text': substep.get('text'),
