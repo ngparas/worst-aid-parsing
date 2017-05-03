@@ -1,3 +1,6 @@
+"""Scrape WebMD page and generate JSON representation
+"""
+
 import json
 import requests
 from bs4 import BeautifulSoup
@@ -79,6 +82,6 @@ def prev_sibling_not_valid(prev_sibling):
             any(x in prev_sibling.get('class', []) for x in ['ad', 'native_ad']))
 
 if __name__ == "__main__":
-    url = raw_input('Enter webmd URL: ')
+    url = input('Enter webmd URL: ')
     result = parse_procedure(url)
-    print json.dumps(result, indent=4, sort_keys=True)
+    print (json.dumps(result, indent=4, sort_keys=True))
