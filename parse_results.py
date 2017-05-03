@@ -6,6 +6,8 @@ import json
 from classify_actions import is_action
 from classify_actions import extract_conditional_clauses
 from classify_actions import split_sentences
+from call_911_classifier import is_911
+from call_911_classifier import extract_911_clauses
 
 
 def load_results(results_path):
@@ -40,15 +42,15 @@ def parse_step(step_text):
 
         parsed_conditionals = extract_conditional_clauses(step)
         if len(parsed_conditionals.get('conditionals')) > 0:
-            parsed_procedure.append({'step': parsed_conditionals.get('conditionals'),
+            parsed_procedure.append({'text': parsed_conditionals.get('conditionals'),
                                          'type': 'conditional'})
         if len(parsed_conditionals.get('nonconditionals')) > 0:
             nc = parsed_conditionals.get('nonconditionals')
             if is_action(nc):
-                parsed_procedure.append({'step': nc,
+                parsed_procedure.append({'text': nc,
                                          'type': 'action'})
             else:
-                parsed_procedure.append({'step': nc,
+                parsed_procedure.append({'text': nc,
                                          'type': 'info'})
     return parsed_procedure
 
@@ -69,13 +71,17 @@ def parse_procedure(procedure):
         additional_text = "If "
         action_text = "Call 911"
 
-        if "911" in step:
+        # if "911" in step:
+        #     for substep in procedure.get('steps').get(step):
+        #         new_text = additional_text + substep.get('text')
+        #         parsed_procedure += parse_step(new_text)
+        #
+        #     parsed_procedure += parse_step("Call 911")
+        if is_911(step):
+            parsed_procedure += extract_911_clauses(step)
             for substep in procedure.get('steps').get(step):
-                new_text = additional_text + substep.get('text')
-                parsed_procedure += parse_step(new_text)
-
-            parsed_procedure += parse_step("Call 911")
-
+                parsed_procedure.append({'text': substep.get('text'),
+                                         'type': '911-conditional-list-item'})
         else:
             parsed_procedure += parse_step(step)
 
@@ -83,7 +89,7 @@ def parse_procedure(procedure):
                 parsed_procedure += parse_step(substep.get('text'))
 
     return parsed_procedure
-        
+
 
 
 def main():

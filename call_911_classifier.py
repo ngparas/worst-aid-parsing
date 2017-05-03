@@ -37,5 +37,5 @@ if __name__ == '__main__':
         if(is_911(s)):
             print(extract_911_clauses(s))
         else:
-            print "Not a Call 911 sentence."
+            print("Not a Call 911 sentence.")
         print('\n')
