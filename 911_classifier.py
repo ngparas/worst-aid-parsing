@@ -1,7 +1,22 @@
+"""Classifier for Call 911 conditionals
+"""
+
+CALL_911_KEYPHRASES = ["call 911"]
+
 def is_911(sentence):
-    return "Call 911" in sentence
+    """Given a sentence, returns whether it relates to a 911 conditional
+
+    Keyword arguments:
+    sentence -- the string that contains the sentence
+    """
+    return any(keyphrase in sentence.lower() for keyphrase in CALL_911_KEYPHRASES)
 
 def extract_911_clauses(sentence):
+    """Given a sentence, returns a list of dictionary representations of the clauses
+
+    Keyword arguments:
+    sentence -- the string that contains the sentence
+    """
     clauses = sentence.split("if")
     return [{'type': '911-conditional', 'text': 'if'+clauses[i]} if i == 1 else {'type': '911-action', 'text': clauses[i]} for i in range(0, len(clauses))]
 
