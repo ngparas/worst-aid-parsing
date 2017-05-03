@@ -8,6 +8,8 @@ from classify_actions import extract_conditional_clauses
 from classify_actions import split_sentences
 from call_911_classifier import is_911
 from call_911_classifier import extract_911_clauses
+from doctor_classifier import is_doctor
+from doctor_classifier import extract_doctor_clauses
 
 
 def load_results(results_path):
@@ -82,6 +84,11 @@ def parse_procedure(procedure):
             for substep in procedure.get('steps').get(step):
                 parsed_procedure.append({'text': substep.get('text'),
                                          'type': '911-conditional-list-item'})
+        if is_doctor(step):
+            parsed_procedure += extract_doctor_clauses(step)
+            for substep in procedure.get('steps').get(step):
+                parsed_procedure.append({'text': substep.get('text'),
+                                         'type': 'doctor-conditional-list-item'})
         else:
             parsed_procedure += parse_step(step)
 
