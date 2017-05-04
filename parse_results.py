@@ -88,7 +88,16 @@ def parse_procedure(procedure):
 
 def main():
     results = load_results('list-of-pages-webmd-results.json')
-    sample_key = list(results.keys())[0]
+
+    # sample_key = list(results.keys())[0]
+    sample_key = "http://www.webmd.com/first-aid/testicular-pain-treatment"
+    print(sample_key)
+    procedure = results.get(sample_key)
+
+    parsed_procedure = parse_procedure(procedure)
+    for p in parsed_procedure:
+        print(p)
+    sample_key = "http://www.webmd.com/first-aid/low-blood-sugar-hypoglycemia-treatment"
     print(sample_key)
     procedure = results.get(sample_key)
 

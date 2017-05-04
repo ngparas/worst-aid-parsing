@@ -91,7 +91,7 @@ def extract_conditional_clauses(sentence):
         if sum(1 for j in conditional_phrases if i in j) == 1:
             if i.lower() not in excluded_clauses:
 
-                cond_results.append(i.replace(" ,", ",").replace(" .", "."))
+                cond_results.append(i.replace(" ,", ",").replace(" .", ".").replace(" - ", "-"))
                 # Found conditional clauses, now get the rest of it
 
     min_match_index = None
@@ -110,7 +110,7 @@ def extract_conditional_clauses(sentence):
         rest = tagged_sentence_text
     else:
         rest = tagged_sentence_text[:min_match_index] + tagged_sentence_text[max_match_index:]
-        rest = rest.replace(" ,", ",").replace(" .", ".")
+        rest = rest.replace(" ,", ",").replace(" .", ".").replace(" - ", "-")
 
     return {"conditionals": cond_results,
             "nonconditionals": rest}
