@@ -10,6 +10,7 @@ from call_911_classifier import is_911
 from call_911_classifier import extract_911_clauses
 from doctor_classifier import is_doctor
 from doctor_classifier import extract_doctor_clauses
+from loop_action_classifier import is_loop_action, extract_loop_action_clauses
 
 
 def load_results(results_path):
@@ -42,18 +43,23 @@ def parse_step(step_text):
     step_sentences = split_sentences(step_text)
     for step in step_sentences:
 
-        parsed_conditionals = extract_conditional_clauses(step)
-        if len(parsed_conditionals.get('conditionals')) > 0:
-            parsed_procedure.append({'text': parsed_conditionals.get('conditionals'),
-                                         'type': 'conditional'})
-        if len(parsed_conditionals.get('nonconditionals')) > 0:
-            nc = parsed_conditionals.get('nonconditionals')
-            if is_action(nc):
-                parsed_procedure.append({'text': nc,
-                                         'type': 'action'})
-            else:
-                parsed_procedure.append({'text': nc,
-                                         'type': 'info'})
+        # deals with loop action case
+        if is_loop_action(step):
+            parsed_procedure += extract_loop_action_clauses(step)
+        
+        else:
+            parsed_conditionals = extract_conditional_clauses(step)
+            if len(parsed_conditionals.get('conditionals')) > 0:
+                parsed_procedure.append({'text': parsed_conditionals.get('conditionals'),
+                                             'type': 'conditional'})
+            if len(parsed_conditionals.get('nonconditionals')) > 0:
+                nc = parsed_conditionals.get('nonconditionals')
+                if is_action(nc):
+                    parsed_procedure.append({'text': nc,
+                                             'type': 'action'})
+                else:
+                    parsed_procedure.append({'text': nc,
+                                             'type': 'info'})
     return parsed_procedure
 
 def parse_procedure(procedure):
@@ -93,6 +99,7 @@ def main():
     results = load_results('list-of-pages-webmd-results.json')
     sample_key = list(results.keys())[0]
     print(sample_key)
+    sample_key = "http://www.webmd.com/first-aid/fainting-treatment"
     procedure = results.get(sample_key)
 
     parsed_procedure = parse_procedure(procedure)

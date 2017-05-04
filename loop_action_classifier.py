@@ -1,4 +1,4 @@
-from classify_actions import is_action
+from classify_actions import is_action, extract_conditional_clauses
 
 LOOP_WORDS = ["until", "while"]
 
@@ -14,7 +14,7 @@ def is_loop_action(sentence):
 
 	return any(loop_word in sentence.lower() for loop_word in LOOP_WORDS)
 
-def extract_loop_action_clause(sentence):
+def extract_loop_action_clauses(sentence):
 	"""Returns a list of first aid graph nodes with the looping conditional type associated with the node.
 	Use if is_loop_action(sentence) is true
 
@@ -22,7 +22,13 @@ def extract_loop_action_clause(sentence):
 	"""
 	for loop_word in LOOP_WORDS:
 		if loop_word in sentence:
-			return {'type': loop_word + '-action', 'text': sentence}
+			clauses = extract_conditional_clauses(sentence)
+			action = clauses["nonconditionals"]
+			conditional = clauses["conditionals"]
+			if not len(action) is 0:
+				return [{'type': loop_word + '-conditional', 'text': conditional}, {'type': loop_word + '-action', 'text': action}]
+			else:
+				 return [{'type': loop_word + '-action', 'text': conditional[0]}]
 
 if __name__ == "__main__":
 	SAMPLES = [ "Avoid spicy or greasy foods and caffeinated or carbonated drinks until 48 hours after all symptoms have gone away.",
@@ -35,8 +41,9 @@ if __name__ == "__main__":
 				"Apply ice to reduce swelling while waiting for medical care."
 			  ]
 
+	print(extract_conditional_clauses(SAMPLES[1]))
 	for sample in SAMPLES:
 		if is_loop_action(sample):
-			print(extract_loop_action_clause(sample))
+			print(extract_loop_action_clauses(sample))
 		else:
 			print("Not a loop action.")
