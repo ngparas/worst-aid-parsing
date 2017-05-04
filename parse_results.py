@@ -2,6 +2,7 @@
 """
 
 import json
+import pprint
 
 from classify_actions import is_action
 from classify_actions import extract_conditional_clauses
@@ -46,7 +47,7 @@ def parse_step(step_text):
         # deals with loop action case
         if is_loop_action(step):
             parsed_procedure += extract_loop_action_clauses(step)
-        
+
         else:
             parsed_conditionals = extract_conditional_clauses(step)
             if len(parsed_conditionals.get('conditionals')) > 0:
@@ -93,7 +94,27 @@ def parse_procedure(procedure):
 
     return parsed_procedure
 
+def add_pointers(graph):
+    """Walk the graph to add in navigation pointers
 
+    Args:
+        graph (Dict): Graph parsed from webmd scraped results
+
+    Return:
+        A graph (Dict) with navigation pointers
+    """
+    size = max(graph.keys())
+    for i in range(1, size):
+        if graph[i].get('type') in ['911-conditional', 'doctor-conditional']:
+            ptr = None #TODO : how to represent end of graph
+            for j in range(i+1, size):
+                if 'item' not in graph[j].get('type'):
+                    ptr = j
+                    break
+            graph[i]['true'] = i + 1
+            graph[i]['false'] = ptr
+
+    return graph
 
 def main():
     results = load_results('list-of-pages-webmd-results.json')
@@ -103,8 +124,13 @@ def main():
     procedure = results.get(sample_key)
 
     parsed_procedure = parse_procedure(procedure)
-    for p in parsed_procedure:
-        print(p)
+    graph = {}
+    for i, p in enumerate(parsed_procedure):
+        graph[i] = p
+
+    graph = add_pointers(graph)
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(graph)
 
 if __name__ == '__main__':
 
