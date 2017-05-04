@@ -3,14 +3,15 @@
 
 import json
 
-from classify_actions import is_action
-from classify_actions import extract_conditional_clauses
-from classify_actions import split_sentences
-from call_911_classifier import is_911
-from call_911_classifier import extract_911_clauses
-from doctor_classifier import is_doctor
-from doctor_classifier import extract_doctor_clauses
-from loop_action_classifier import is_loop_action, extract_loop_action_clauses
+from parsing_utils import is_action
+from parsing_utils import extract_conditional_clauses
+from parsing_utils import split_sentences
+from parsing_utils import is_911
+from parsing_utils import extract_911_clauses
+from parsing_utils import is_doctor
+from parsing_utils import extract_doctor_clauses
+from parsing_utils import is_loop_action
+from parsing_utils import extract_loop_action_clauses
 
 
 def load_results(results_path):
