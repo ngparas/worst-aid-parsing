@@ -96,21 +96,25 @@ def extract_conditional_clauses(sentence):
 
     min_match_index = None
     max_match_index = None
+    rest = tagged_sentence_text
     for clause in cond_results:
-        match = re.search(clause, tagged_sentence_text)
+        match = re.search(clause, rest)
         if match is not None:
             if min_match_index is None or match.start() < min_match_index:
                 min_match_index = match.start()
             if max_match_index is None or match.end() > max_match_index:
                 max_match_index = match.end()
 
-    # subset string to stuff outside of matches
-    # TODO : be more clever about this
-    if min_match_index is None or max_match_index is None:
-        rest = tagged_sentence_text
-    else:
-        rest = tagged_sentence_text[:min_match_index] + tagged_sentence_text[max_match_index:]
-        rest = rest.replace(" ,", ",").replace(" .", ".").replace(" '", "'")
+        # subset string to stuff outside of matches
+        # TODO : be more clever about this
+        if min_match_index is None or max_match_index is None:
+            pass
+        else:
+            rest = rest[:min_match_index] + rest[max_match_index:]
+            rest = rest.replace(" ,", ",").replace(" .", ".").replace(" '", "'")
+
+        min_match_index = None
+        max_match_index = None
 
     return {"conditionals": cond_results,
             "nonconditionals": rest}
