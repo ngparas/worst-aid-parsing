@@ -6,6 +6,14 @@ import spacy
 
 # use some garbage globals until we know what this app will look like
 nlp = spacy.load('en')
+CALL_911_KEYPHRASES = ["call 911"]
+DOCTOR_KEYPHRASES = ["call a doctor",
+                     "call your child's doctor",
+                     "when to see a doctor",
+                     "when to call a doctor",
+                     "see a doctor",
+                     "call the doctor"]
+LOOP_WORDS = ["until", "while"]
 
 def split_sentences(text):
     """Util function to parse sentences
@@ -119,6 +127,81 @@ def extract_conditional_clauses(sentence):
     return {"conditionals": cond_results,
             "nonconditionals": rest}
 
+
+def is_911(sentence):
+    """Given a sentence, returns whether it relates to a 911 conditional
+
+    Keyword arguments:
+    sentence -- the string that contains the sentence
+    """
+    return any(keyphrase in sentence.lower() for keyphrase in CALL_911_KEYPHRASES)
+
+def extract_911_clauses(sentence):
+    """Given a sentence, returns a list of dictionary representations of the clauses
+
+    Keyword arguments:
+    sentence -- the string that contains the sentence
+    """
+    clauses = sentence.split("if")
+    return [{'type': '911-conditional', 'text': 'if'+clauses[i]} if i == 1 else {'type': '911-action', 'text': clauses[i]} for i in range(0, len(clauses))]
+
+
+
+def is_doctor(sentence):
+    """Given a sentence, returns whether it relates to a doctor conditional
+
+    Keyword arguments:
+    sentence -- the string that contains the sentence
+    """
+    return any(keyphrase in sentence.lower() for keyphrase in DOCTOR_KEYPHRASES)
+
+def extract_doctor_clauses(sentence):
+    """Given a sentence, returns a list of dictionary representations of the clauses
+
+    Keyword arguments:
+    sentence -- the string that contains the sentence
+    """
+    if "if" in sentence:
+        clauses = sentence.split("if")
+        return [{'type': 'doctor-conditional', 'text': 'if' + clauses[i]} if i == 1
+                else {'type': 'doctor-action', 'text': clauses[i]} for i in range(0, len(clauses))]
+    else:
+        return [{'type': 'doctor-conditional', 'text': sentence}]
+
+
+
+def is_loop_action(sentence):
+	"""Returns true if sentence is an action containing a "loop word" as defined in LOOP_WORDS
+
+	sentence -- string containing the sentence of interest
+	"""
+	# Looks like is_action needs some work, let's look into that
+	# print(is_action(sentence))
+	# print(any(loop_word in sentence.lower() for loop_word in LOOP_WORDS))
+	# return is_action(sentence) and any(loop_word in sentence.lower() for loop_word in LOOP_WORDS)
+
+	return any(loop_word in sentence.lower() for loop_word in LOOP_WORDS)
+
+def extract_loop_action_clauses(sentence):
+	"""Returns a list of first aid graph nodes with the looping conditional type associated with the node.
+	Use if is_loop_action(sentence) is true
+
+	sentence -- string containing the sentence of interest
+	"""
+	for loop_word in LOOP_WORDS:
+		if loop_word in sentence:
+			clauses = extract_conditional_clauses(sentence)
+			action = clauses["nonconditionals"]
+			conditional = clauses["conditionals"]
+			if not len(action) is 0:
+				return [{'type': loop_word + '-conditional', 'text': conditional}, {'type': loop_word + '-action', 'text': action}]
+			else:
+				 return [{'type': loop_word + '-action', 'text': conditional[0]}]
+
+
+
+
+
 if __name__ == '__main__':
     samples = ["Rest the sprained or strained area.",
                "If necessary, use a sling for an arm injury or crutches for a leg or foot injury.",
@@ -154,3 +237,59 @@ if __name__ == '__main__':
         print(s)
         print(extract_conditional_clauses(s))
         print('\n')
+
+
+    SAMPLES = [ "Avoid spicy or greasy foods and caffeinated or carbonated drinks until 48 hours after all symptoms have gone away.",
+    			"Apply direct pressure until bleeding stops.",
+    			"Flush with lukewarm water for 15 to 30 minutes.",
+    			"For severe burns, continue flushing until you see a doctor or you arrive in an emergency room.",
+    			"Don't rub eyes.",
+    			"Apply ice and elevate hand to reduce swelling.",
+    			"Avoid sex, tampons, or douching while you're bleeding.",
+    			"Apply ice to reduce swelling while waiting for medical care."
+    		  ]
+    
+    print(extract_conditional_clauses(SAMPLES[1]))
+    for sample in SAMPLES:
+    	if is_loop_action(sample):
+    		print(extract_loop_action_clauses(sample))
+    	else:
+    		print("Not a loop action.")
+
+
+    samples = ["Rest the sprained or strained area.",
+               "If necessary, use a sling for an arm injury or crutches for a leg or foot injury.",
+               "Call 911 NOW if:",
+               "Call 911 NOW if the person is:",
+               "Call 911 if the person has these symptoms of alcohol poisoning:",
+               "Call 911 now if the person has had severe reactions in the past or has any of these symptoms:",
+               "Call 911 if the person:",
+               "Call 911",
+               "Call 911 if:",
+               "Call 911 if the person loses consciousness or has:"]
+
+    for s in samples:
+        print(s)
+        if(is_911(s)):
+            print(extract_911_clauses(s))
+        else:
+            print("Not a Call 911 sentence.")
+        print('\n')
+
+    SAMPLES = ["Call your child's doctor immediately if your child has any of the following:",
+               "Call 911 NOW if:",
+               "4. When to See a Doctor",
+               "3. When to Call a Doctor",
+               "Call a doctor if the person has:",
+               "3. Ease Into Eating",
+               "See a doctor immediately for these symptoms:",
+               "Call the doctor as soon as possible if the person has:",
+               "For a mild reaction:"]
+
+    for s in SAMPLES:
+        print(s)
+        if is_doctor(s):
+            print(extract_doctor_clauses(s))
+        else:
+            print("Not a doctor-related sentence.")
+        print("\n")
