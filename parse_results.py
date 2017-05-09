@@ -105,7 +105,8 @@ def add_pointers(graph):
     """
     size = max(graph.keys())
     for i in range(1, size):
-        if graph[i].get('type') in ['911-conditional', 'doctor-conditional']:
+        node_type = graph[i].get('type')
+        if node_type in ['911-conditional', 'doctor-conditional']:
             ptr = None #TODO : how to represent end of graph
             for j in range(i+1, size):
                 if 'item' not in graph[j].get('type'):
@@ -113,6 +114,9 @@ def add_pointers(graph):
                     break
             graph[i]['true'] = i + 1
             graph[i]['false'] = ptr
+        elif node_type == 'conditional':
+            graph[i]['true'] = i + 1
+            graph[i]['false'] = i + 2
 
     return graph
 
