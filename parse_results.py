@@ -104,7 +104,8 @@ def add_pointers(graph):
         A graph (Dict) with navigation pointers
     """
     size = max(graph.keys())
-    for i in range(1, size):
+    # for i in range(1, size):
+    for i in graph.keys():
         node_type = graph[i].get('type')
         if node_type in ['911-conditional', 'doctor-conditional']:
             ptr = None #TODO : how to represent end of graph
@@ -112,11 +113,11 @@ def add_pointers(graph):
                 if 'item' not in graph[j].get('type'):
                     ptr = j
                     break
-            graph[i]['true'] = i + 1
+            graph[i]['true'] = i + 1 if (i + 1 <= size) else None
             graph[i]['false'] = ptr
         elif node_type == 'conditional':
-            graph[i]['true'] = i + 1
-            graph[i]['false'] = i + 2
+            graph[i]['true'] = i + 1 if (i + 1 <= size) else None
+            graph[i]['false'] = i + 2 if (i + 2 <= size) else None
 
     return graph
 
