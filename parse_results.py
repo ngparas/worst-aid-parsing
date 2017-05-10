@@ -118,6 +118,9 @@ def add_pointers(graph):
         elif node_type == 'conditional':
             graph[i]['true'] = i + 1 if (i + 1 <= size) else None
             graph[i]['false'] = i + 2 if (i + 2 <= size) else None
+        elif node_type in ['action', 'info']:
+            graph[i]['true'] = i + 1 if (i + 1 <= size) else None
+            graph[i]['false'] = i + 1 if (i + 1 <= size) else None
 
     return graph
 
