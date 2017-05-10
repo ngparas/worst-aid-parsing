@@ -183,20 +183,21 @@ def is_loop_action(sentence):
 	return any(loop_word in sentence.lower() for loop_word in LOOP_WORDS)
 
 def extract_loop_action_clauses(sentence):
-	"""Returns a list of first aid graph nodes with the looping conditional type associated with the node.
-	Use if is_loop_action(sentence) is true
+    """Returns a list of first aid graph nodes with the looping conditional type associated with the node.
+        Use if is_loop_action(sentence) is true
 
-	sentence -- string containing the sentence of interest
-	"""
-	for loop_word in LOOP_WORDS:
-		if loop_word in sentence:
-			clauses = extract_conditional_clauses(sentence)
-			action = clauses["nonconditionals"]
-			conditional = clauses["conditionals"]
-			if not len(action) is 0:
-				return [{'type': loop_word + '-conditional', 'text': conditional}, {'type': loop_word + '-action', 'text': action}]
-			else:
-				 return [{'type': loop_word + '-action', 'text': conditional[0]}]
+        sentence -- string containing the sentence of interest
+        """
+    for loop_word in LOOP_WORDS:
+        if loop_word in sentence:
+            clauses = extract_conditional_clauses(sentence)
+            action = clauses["nonconditionals"]
+            conditional = clauses["conditionals"]
+            if not len(action) is 0:
+                return [{'type': loop_word + '-conditional', 'text': conditional}, {'type': loop_word + '-action', 'text': action}]
+            else:
+                return [{'type': loop_word + '-action', 'text': conditional[0]}]
+    return []
 
 
 
