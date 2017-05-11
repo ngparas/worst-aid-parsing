@@ -30,7 +30,7 @@ def load_results(results_path):
     with open(results_path, 'r') as rf:
         return json.loads(rf.read().replace('\n', ''))
 
-def parse_step(step_text):
+def parse_step(step_text, level):
     """Parse one step into its component nodes
 
     Args:
@@ -52,15 +52,18 @@ def parse_step(step_text):
             parsed_conditionals = extract_conditional_clauses(step)
             if len(parsed_conditionals.get('conditionals')) > 0:
                 parsed_procedure.append({'text': parsed_conditionals.get('conditionals'),
-                                             'type': 'conditional'})
+                                             'type': 'conditional',
+                                             'level': level})
             if len(parsed_conditionals.get('nonconditionals')) > 0:
                 nc = parsed_conditionals.get('nonconditionals')
                 if is_action(nc):
                     parsed_procedure.append({'text': nc,
-                                             'type': 'action'})
+                                             'type': 'action',
+                                             'level': level})
                 else:
                     parsed_procedure.append({'text': nc,
-                                             'type': 'info'})
+                                             'type': 'info',
+                                             'level': level})
     return parsed_procedure
 
 def parse_procedure(procedure):
@@ -87,10 +90,10 @@ def parse_procedure(procedure):
                 parsed_procedure.append({'text': substep.get('text'),
                                          'type': 'doctor-conditional-list-item'})
         else:
-            parsed_procedure += parse_step(step)
+            parsed_procedure += parse_step(step, 'main')
 
             for substep in procedure.get('steps').get(step):
-                parsed_procedure += parse_step(substep.get('text'))
+                parsed_procedure += parse_step(substep.get('text'), 'substep')
 
     return parsed_procedure
 
@@ -104,7 +107,6 @@ def add_pointers(graph):
         A graph (Dict) with navigation pointers
     """
     size = max(graph.keys())
-    # for i in range(1, size):
     for i in graph.keys():
         node_type = graph[i].get('type')
         if node_type in ['911-conditional', 'doctor-conditional']:
@@ -116,8 +118,13 @@ def add_pointers(graph):
             graph[i]['true'] = i + 1 if (i + 1 <= size) else None
             graph[i]['false'] = ptr
         elif node_type == 'conditional':
+            ptr = None
+            for k in range(i+2, size):
+                if graph[i].get('level') == graph[k].get('level'):
+                    ptr = k
+                    break
             graph[i]['true'] = i + 1 if (i + 1 <= size) else None
-            graph[i]['false'] = i + 2 if (i + 2 <= size) else None
+            graph[i]['false'] = k
         elif node_type in ['action', 'info']:
             graph[i]['true'] = i + 1 if (i + 1 <= size) else None
             graph[i]['false'] = i + 1 if (i + 1 <= size) else None
