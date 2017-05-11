@@ -100,6 +100,7 @@ def parse_procedure(procedure):
     for step in procedure.get('order'):
         if is_911(step):
             current_main_step = extract_911_clauses(step)
+            print(current_main_step)
             for substep in procedure.get('steps').get(step):
                 substep['type'] = '911-conditional-list-item'
                 current_main_step['substeps'].append(substep)

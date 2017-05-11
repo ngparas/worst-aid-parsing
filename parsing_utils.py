@@ -22,7 +22,7 @@ def split_sentences(text):
 
     Args:
         text (string): a text string to be split into sentences
-   
+
     Return:
         A list of strings
     """
@@ -145,7 +145,7 @@ def extract_911_clauses(sentence):
     sentence -- the string that contains the sentence
     """
     clauses = sentence.split("if")
-    return [{'type': '911-conditional', 'text': 'if'+clauses[i]} if i == 1 else {'type': '911-action', 'text': clauses[i]} for i in range(0, len(clauses))]
+    return {'substeps' : [], 'type': '911-conditional', 'text': sentence}
 
 
 
@@ -163,12 +163,7 @@ def extract_doctor_clauses(sentence):
     Keyword arguments:
     sentence -- the string that contains the sentence
     """
-    if "if" in sentence:
-        clauses = sentence.split("if")
-        return [{'type': 'doctor-conditional', 'text': 'if' + clauses[i]} if i == 1
-                else {'type': 'doctor-action', 'text': clauses[i]} for i in range(0, len(clauses))]
-    else:
-        return [{'type': 'doctor-conditional', 'text': sentence}]
+    return {'substeps': [], 'type': 'doctor-conditional', 'text': sentence}
 
 
 
@@ -251,7 +246,7 @@ if __name__ == '__main__':
     			"Avoid sex, tampons, or douching while you're bleeding.",
     			"Apply ice to reduce swelling while waiting for medical care."
     		  ]
-    
+
     print(extract_conditional_clauses(SAMPLES[1]))
     for sample in SAMPLES:
     	if is_loop_action(sample):
