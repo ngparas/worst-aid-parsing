@@ -18,7 +18,7 @@ def extract_911_clauses(sentence):
     sentence -- the string that contains the sentence
     """
     clauses = sentence.split("if")
-    return [{'type': '911-conditional', 'text': 'if'+clauses[i]} if i == 1 else {'type': '911-action', 'text': clauses[i]} for i in range(0, len(clauses))]
+    return {'substeps' : [], 'type': '911-conditional', 'text': sentence}
 
 if __name__ == '__main__':
     samples = ["Rest the sprained or strained area.",

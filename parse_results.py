@@ -30,7 +30,7 @@ def load_results(results_path):
     with open(results_path, 'r') as rf:
         return json.loads(rf.read().replace('\n', ''))
 
-def parse_step(step_text, level):
+def parse_step(step_text, links, is_main_step):
     """Parse one step into its component nodes
 
     Args:
@@ -51,20 +51,24 @@ def parse_step(step_text, level):
         else:
             parsed_conditionals = extract_conditional_clauses(step)
             if len(parsed_conditionals.get('conditionals')) > 0:
-                parsed_procedure.append({'text': parsed_conditionals.get('conditionals'),
-                                             'type': 'conditional',
-                                             'level': level})
+                parsed_procedure.append(generate_step_entry(parsed_conditionals.get('conditionals'), 'conditional', links, is_main_step))
             if len(parsed_conditionals.get('nonconditionals')) > 0:
                 nc = parsed_conditionals.get('nonconditionals')
                 if is_action(nc):
-                    parsed_procedure.append({'text': nc,
-                                             'type': 'action',
-                                             'level': level})
+                    parsed_procedure.append(generate_step_entry(nc, 'action', links, is_main_step))
                 else:
-                    parsed_procedure.append({'text': nc,
-                                             'type': 'info',
-                                             'level': level})
+                    parsed_procedure.append(generate_step_entry(nc, 'info', links, is_main_step))
     return parsed_procedure
+
+def generate_step_entry(text, type, links, is_main_step):
+    if is_main_step:
+        return {'text': text,
+                'type': type,
+                'substeps': []}
+    else:
+        return {'text': text,
+                'type': type,
+                'links': links}
 
 def parse_procedure(procedure):
     """Parse a full procedure into a list of nodes
@@ -80,20 +84,23 @@ def parse_procedure(procedure):
 
     for step in procedure.get('order'):
         if is_911(step):
-            parsed_procedure += extract_911_clauses(step)
+            current_main_step = extract_911_clauses(step)
             for substep in procedure.get('steps').get(step):
-                parsed_procedure.append({'text': substep.get('text'),
-                                         'type': '911-conditional-list-item'})
+                substep['type'] = '911-conditional-list-item'
+                current_main_step['substeps'].append(substep)
+            parsed_procedure += [current_main_step]
         elif is_doctor(step):
-            parsed_procedure += extract_doctor_clauses(step)
+            current_main_step = extract_doctor_clauses(step)
             for substep in procedure.get('steps').get(step):
-                parsed_procedure.append({'text': substep.get('text'),
-                                         'type': 'doctor-conditional-list-item'})
+                substep['type'] = 'doctor-conditional-list-item'
+                current_main_step['substeps'].append(substep)
+            parsed_procedure += [current_main_step]
         else:
-            parsed_procedure += parse_step(step, 'main')
+            current_main_step = parse_step(step, [], True)
 
             for substep in procedure.get('steps').get(step):
-                parsed_procedure += parse_step(substep.get('text'), 'substep')
+                current_main_step[0]['substeps'].append(parse_step(substep.get('text'), substep.get('links'), False))
+            parsed_procedure += current_main_step
 
     return parsed_procedure
 
@@ -143,7 +150,7 @@ def main():
     for i, p in enumerate(parsed_procedure):
         graph[i] = p
 
-    graph = add_pointers(graph)
+    #graph = add_pointers(graph)
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(graph)
 

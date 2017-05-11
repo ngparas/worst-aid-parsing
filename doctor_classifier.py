@@ -6,7 +6,9 @@ DOCTOR_KEYPHRASES = ["call a doctor",
                      "when to see a doctor",
                      "when to call a doctor",
                      "see a doctor",
-                     "call the doctor"]
+                     "call the doctor",
+                     "see a health care provider",
+                     "call a health care provider"]
 
 def is_doctor(sentence):
     """Given a sentence, returns whether it relates to a doctor conditional
@@ -22,12 +24,7 @@ def extract_doctor_clauses(sentence):
     Keyword arguments:
     sentence -- the string that contains the sentence
     """
-    if "if" in sentence:
-        clauses = sentence.split("if")
-        return [{'type': 'doctor-conditional', 'text': 'if' + clauses[i]} if i == 1
-                else {'type': 'doctor-action', 'text': clauses[i]} for i in range(0, len(clauses))]
-    else:
-        return [{'type': 'doctor-conditional', 'text': sentence}]
+    return {'substeps': [], 'type': 'doctor-conditional', 'text': sentence}
 
 if __name__ == "__main__":
     SAMPLES = ["Call your child's doctor immediately if your child has any of the following:",
