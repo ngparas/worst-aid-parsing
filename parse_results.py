@@ -51,7 +51,8 @@ def parse_step(step_text, links, is_main_step):
         else:
             parsed_conditionals = extract_conditional_clauses(step)
             if len(parsed_conditionals.get('conditionals')) > 0:
-                parsed_procedure.append(generate_step_entry(parsed_conditionals.get('conditionals'), 'conditional', links, is_main_step))
+                parsed_procedure.append(generate_step_entry(step_text, 'conditional', links, is_main_step,
+                    parsed_conditionals.get('conditionals'), parsed_conditionals.get('nonconditionals')))
             if len(parsed_conditionals.get('nonconditionals')) > 0:
                 nc = parsed_conditionals.get('nonconditionals')
                 if is_action(nc):
@@ -60,15 +61,28 @@ def parse_step(step_text, links, is_main_step):
                     parsed_procedure.append(generate_step_entry(nc, 'info', links, is_main_step))
     return parsed_procedure
 
-def generate_step_entry(text, type, links, is_main_step):
+def generate_step_entry(text, type, links, is_main_step, conditionals = None, nonconditionals = None):
     if is_main_step:
-        return {'text': text,
-                'type': type,
-                'substeps': []}
+        if type == 'conditional':
+            return {'text': text,
+                    'type': type,
+                    'conditionals': conditionals,
+                    'nonconditionals': nonconditionals,
+                    'substeps': []}
+        else:
+            return {'text': text,
+                    'type': type,
+                    'substeps': []}
     else:
-        return {'text': text,
-                'type': type,
-                'links': links}
+        if type == 'conditional':
+            return {'text': text,
+                    'type': type,
+                    'conditionals': conditionals,
+                    'nonconditionals': nonconditionals}
+        else:
+            return {'text': text,
+                    'type': type,
+                    'links': links}
 
 def parse_procedure(procedure):
     """Parse a full procedure into a list of nodes
