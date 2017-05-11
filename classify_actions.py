@@ -91,14 +91,16 @@ def extract_conditional_clauses(sentence):
         if sum(1 for j in conditional_phrases if i in j) == 1:
             if i.lower() not in excluded_clauses:
 
-                cond_results.append(i.replace(" ,", ",").replace(" .", ".").replace(" '", "'"))
+                cond_results.append(i)
                 # Found conditional clauses, now get the rest of it
 
     min_match_index = None
     max_match_index = None
     rest = tagged_sentence_text
     for clause in cond_results:
-        match = re.search(clause, rest)
+        search_clause = ''.join(clause.split())
+        search_clause = '\s*'.join(search_clause)
+        match = re.search(search_clause, rest)
         if match is not None:
             if min_match_index is None or match.start() < min_match_index:
                 min_match_index = match.start()
@@ -148,7 +150,7 @@ if __name__ == '__main__':
     #     print(s)
     #     print(is_action(s))
 
-    extract_conditional_clauses("Make an appointment with a doctor if you still have pain after two weeks of home treatment, if the knee becomes warm, or if you have fever along with a painful, swollen knee.")
+    print(extract_conditional_clauses("If the person doesn't respond, call 911 immediately and start CPR if necessary."))
 
     for s in samples:
         print(s)
