@@ -24,21 +24,29 @@ def get_procedure():
 @app.route('/classifier')
 def classify_text():
     query = request.args.get('query')
-    if any([i in query for i in ['next', 'forward', 'continue', 'go on', 'keep going']]):
+
+    next_file = open('next_phrases.txt')
+    prev_file = open('prev_phrases.txt')
+    repeat_file = open('repeat_phrases.txt')
+    yes_file = open('yes_phrases.txt')
+    no_file = open('no_phrases.txt')
+
+
+    if any([i.strip() in query.lower() for i in next_file]):
         return json.dumps({'textClass': 'nav',
                            'value': 'next'})
-    elif any([i in query for i in ['previous', 'back']]):
+    elif any([i.strip() in query.lower() for i in prev_file]):
         return json.dumps({'textClass': 'nav',
                            'value': 'prev'})
-    elif any([i in query for i in ['repeat']]):
+    elif any([i.strip() in query.lower() for i in repeat_file]):
         return json.dumps({'textClass': 'nav',
                            'value': 'stay'})
-    elif any([i in query for i in ['yes', 'yeah', 'yah', 'sure', 'great', 'okay', 'yup']]):
-        return json.dumps({'textClass': 'answer',
-                           'value': True})
-    elif any([i in query for i in ['no', 'nope', 'nah']]):
+    elif any([i.strip() in query.lower() for i in no_file]):
         return json.dumps({'textClass': 'answer',
                            'value': False})
+    elif any([i.strip() in query.lower() for i in yes_file]):
+        return json.dumps({'textClass': 'answer',
+                           'value': True})
     else:
         return json.dumps({'textClass': 'question',
                            'value': True})
