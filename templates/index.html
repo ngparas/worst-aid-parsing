@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script> 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/app.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <title>First Aid Bot</title>
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <div><h3 style="color: white">First Aid Bot</h3></div>
+        </div>
+      </div>
+    </nav>
+
+    <div id="mainapp">
+      <div class="container">
+        <div class="well" style="height: 80%">
+        <div class="chat-body">
+          <!--<h1>Lorem Ipsum</h1>-->
+          <chat-item v-for="item in messageList" v-bind:chat="item"></chat-item>
+        </div>
+        </div>
+        <input v-on:keyup.enter="submitMessage" v-model="userText" type="text" class="form-control" aria-describedby="basic-addon1">
+
+      </div>
+    </div>
+
+
+
+    <script src="static/app.js"></script>
+  </body>
+
+
+</html>

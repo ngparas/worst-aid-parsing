@@ -1,0 +1,13 @@
+body {
+  padding-top: 80px;
+}
+.chat-body {
+  padding: 40px 15px;
+  text-align: center;
+  height: 100%;
+  overflow:auto;
+}
+
+#mainapp {
+    padding: 20 20 20 20;
+}
