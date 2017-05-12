@@ -47,12 +47,14 @@ def parse_step(step_text, links, is_main_step):
 
         # deals with loop action case
         if is_loop_action(step):
-            parsed_procedure += extract_loop_action_clauses(step)
-
+            loop_action = extract_loop_action_clauses(step)
+            if is_main_step:
+                loop_action['substeps'] = []
+            parsed_procedure.append(loop_action)
         else:
             parsed_conditionals = extract_conditional_clauses(step)
             if len(parsed_conditionals.get('conditionals')) > 0:
-                parsed_procedure.append(generate_step_entry(step_text, 'conditional', links, is_main_step,
+                parsed_procedure.append(generate_step_entry(step, 'conditional', links, is_main_step,
                     parsed_conditionals.get('conditionals'), parsed_conditionals.get('nonconditionals')))
             if len(parsed_conditionals.get('conditionals')) == 0:
                 nc = parsed_conditionals.get('nonconditionals')
@@ -160,7 +162,8 @@ def main():
     results = load_results('list-of-pages-webmd-results.json')
     sample_key = list(results.keys())[0]
     print(sample_key)
-    sample_key = "http://www.webmd.com/first-aid/fainting-treatment"
+    # sample_key = "http://www.webmd.com/first-aid/fainting-treatment"
+    sample_key = "http://www.webmd.com/first-aid/asthma-treatment"
     procedure = results.get(sample_key)
 
     graph = parse_procedure(procedure)

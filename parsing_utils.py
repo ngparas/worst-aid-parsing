@@ -186,15 +186,16 @@ def extract_loop_action_clauses(sentence):
         sentence -- string containing the sentence of interest
         """
     for loop_word in LOOP_WORDS:
-        if loop_word in sentence:
+        if loop_word in sentence.lower():
             clauses = extract_conditional_clauses(sentence)
-            action = clauses["nonconditionals"]
-            conditional = clauses["conditionals"]
+            conditionals = clauses["conditionals"]
+            loop_condition = next(x for x in conditionals if is_loop_action(x))
+            action = sentence.replace(loop_condition, "")
             if not len(action) is 0:
-                return [{'type': loop_word + '-conditional', 'text': conditional}, {'type': loop_word + '-action', 'text': action}]
+                return {'type': loop_word + '-conditional', 'text': sentence, 'loop-condition': loop_condition, 'action': action}
             else:
-                return [{'type': loop_word + '-action', 'text': conditional[0]}]
-    return []
+                return {'type': loop_word + '-conditional', 'text': sentence, 'loop-condition': loop_condition, 'action': action}
+    return {}
 
 
 
@@ -244,7 +245,8 @@ if __name__ == '__main__':
     			"Don't rub eyes.",
     			"Apply ice and elevate hand to reduce swelling.",
     			"Avoid sex, tampons, or douching while you're bleeding.",
-    			"Apply ice to reduce swelling while waiting for medical care."
+    			"Apply ice to reduce swelling while waiting for medical care.",
+                "6. Monitor the Person Until Help Arrives"
     		  ]
 
     print(extract_conditional_clauses(SAMPLES[1]))
