@@ -100,24 +100,25 @@ def parse_procedure(procedure):
     parsed_procedure = []
 
     for step in procedure.get('order'):
-        if is_911(step):
-            current_main_step = extract_911_clauses(step)
-            for substep in procedure.get('steps').get(step):
-                substep['type'] = '911-conditional-list-item'
-                current_main_step['substeps'].append(substep)
-            parsed_procedure += [current_main_step]
-        elif is_doctor(step):
-            current_main_step = extract_doctor_clauses(step)
-            for substep in procedure.get('steps').get(step):
-                substep['type'] = 'doctor-conditional-list-item'
-                current_main_step['substeps'].append(substep)
-            parsed_procedure += [current_main_step]
-        else:
-            current_main_step = parse_step(step, [], True)
+        if step != '':
+            if is_911(step):
+                current_main_step = extract_911_clauses(step)
+                for substep in procedure.get('steps').get(step):
+                    substep['type'] = '911-conditional-list-item'
+                    current_main_step['substeps'].append(substep)
+                parsed_procedure += [current_main_step]
+            elif is_doctor(step):
+                current_main_step = extract_doctor_clauses(step)
+                for substep in procedure.get('steps').get(step):
+                    substep['type'] = 'doctor-conditional-list-item'
+                    current_main_step['substeps'].append(substep)
+                parsed_procedure += [current_main_step]
+            else:
+                current_main_step = parse_step(step, [], True)
 
-            for substep in procedure.get('steps').get(step):
-                current_main_step[0]['substeps'] += parse_step(substep.get('text'), substep.get('links'), False)
-            parsed_procedure += current_main_step
+                for substep in procedure.get('steps').get(step):
+                    current_main_step[0]['substeps'] += parse_step(substep.get('text'), substep.get('links'), False)
+                parsed_procedure += current_main_step
 
     graph = {}
     for i, p in enumerate(parsed_procedure):
