@@ -51,58 +51,58 @@ var mainapp = new Vue({
                               'isUser': true}
                 msgObj.textClass = response.body.textClass;
                 msgObj.textClassValue = response.body.value;
+
+
+                if (this.procedureIndex === null) {
+                    // We don't have a graph loaded yet, get one
+                    this.getProcedure(this.userText);
+                    // should probably have done this before but whatever
+                    msgObj.textClass = 'graph';
+                    msgObj.textClassValue = 'graph';
+                    this.messageList[this.messageList.length - 1].textClass = 'graph';
+                    this.messageList[this.messageList.length - 1].textClassValue = 'graph';
+                }
                 this.addMessage(msgObj);
 
+                switch(msgObj.textClass){
+                    case 'nav':
+                        if (msgObj.textClassValue == 'next') {
+                            // TODO : check bounds
+                            this.procedureIndex += 1;
+                            this.messageList.push({"text": "Pretend I advanced the Graph"})
+                            break;
+                        } else if (msgObj.textClassValue == 'prev') {
+                            // TODO : check bounds
+                            this.procedureIndex -= 1;
+                            this.messageList.push({"text": "Pretend I moved back along the Graph"})
+                            break;
+                        } else {
+                            // this.procedureIndex doesn't change
+                            this.messageList.push({"text": "I'm going to stay here in the Graph"})
+                            break;
+                        }
+                        break;
+                        // some other stuff
+                    case 'question':
+                        // some other stuff
+                        this.messageList.push({"text": "You asked a question, let's pretend I responded"})
+                        break;
+                    case 'answer':
+                        // some more other stuff
+                        if (msgObj.textClassValue == true) {
+                            this.messageList.push({"text": "I heard you say yes"})
+                            break;
+                        } else {
+                            this.messageList.push({"text": "I heard you say no"})
+                            break;
+                        }
+                            break;
+                    default:
+                        // get here from the 'graph' type, so start at 0
+                        console.log('asdf')
+                        break;
 
-            if (this.procedureIndex === null) {
-                // We don't have a graph loaded yet, get one
-                this.getProcedure(this.userText);
-                // should probably have done this before but whatever
-                msgObj.textClass = 'graph';
-                msgObj.textClassValue = 'graph';
-                this.messageList[this.messageList.length - 1].textClass = 'graph';
-                this.messageList[this.messageList.length - 1].textClassValue = 'graph';
-            }
-
-            switch(msgObj.textClass){
-                case 'nav':
-                    if (msgObj.textClassValue == 'next') {
-                        // TODO : check bounds
-                        this.procedureIndex += 1;
-                        this.messageList.push({"text": "Pretend I advanced the Graph"})
-                        break;
-                    } else if (msgObj.textClassValue == 'prev') {
-                        // TODO : check bounds
-                        this.procedureIndex -= 1;
-                        this.messageList.push({"text": "Pretend I moved back along the Graph"})
-                        break;
-                    } else {
-                        // this.procedureIndex doesn't change
-                        this.messageList.push({"text": "I'm going to stay here in the Graph"})
-                        break;
-                    }
-                    break;
-                    // some other stuff
-                case 'question':
-                    // some other stuff
-                    this.messageList.push({"text": "You asked a question, let's pretend I responded"})
-                    break;
-                case 'answer':
-                    // some more other stuff
-                    if (msgObj.textClassValue == true) {
-                        this.messageList.push({"text": "I heard you say yes"})
-                        break;
-                    } else {
-                        this.messageList.push({"text": "I heard you say no"})
-                        break;
-                    }
-                        break;
-                default:
-                    // get here from the 'graph' type, so start at 0
-                    console.log('asdf')
-                    break;
-
-            }
+                }
 
             }, response => {
                 // error callback
