@@ -148,11 +148,9 @@ var mainapp = new Vue({
                     default:
                         if(this.innerIndex == null) {
                             this.messageList.push({"text": step.text})
-                            this.innerIndex = -1;
+                            this.innerIndex = 0;
                         }
-                        else {
-                            this.messageList.push({"text": step.substeps[this.innerIndex].text})
-                        }
+                        this.messageList.push({"text": step.substeps[this.innerIndex].text});
                 }
             }
         },
@@ -163,19 +161,27 @@ var mainapp = new Vue({
                     // We don't have a graph loaded yet, get one
                     this.getProcedure(this.userText).then(response => {
                         // get body data
-                        this.messageList.push({
-                            "text": "I can help with " + toTitleCase(response.body.key.replace(/-/g, " ")),
-                            "isUser": false
-                        });
-                        this.procedureGraph = response.body.graph;
-                        this.procedureIndex = 0
+                        if(response.body.key === 'none'){
+                            this.messageList.push({
+                                "text": "I'm sorry, I don't recognize that. Please try again.",
+                                "isUser": false
+                            });
+                        }
+                        else{
+                                this.messageList.push({
+                                "text": "I can help with " + toTitleCase(response.body.key.replace(/-/g, " ")),
+                                "isUser": false
+                            });
+                            this.procedureGraph = response.body.graph;
+                            this.procedureIndex = 0
 
-                        // Set graph
-                        msgObj.textClass = 'graph';
-                        msgObj.textClassValue = 'graph';
-                        this.messageList[this.messageList.length - 1].textClass = 'graph';
-                        this.messageList[this.messageList.length - 1].textClassValue = 'graph';
-                        resolve(msgObj);
+                            // Set graph
+                            msgObj.textClass = 'graph';
+                            msgObj.textClassValue = 'graph';
+                            this.messageList[this.messageList.length - 1].textClass = 'graph';
+                            this.messageList[this.messageList.length - 1].textClassValue = 'graph';
+                            resolve(msgObj);
+                        }
                     }, err => {
                         // error callback
                         this.messageList.push({

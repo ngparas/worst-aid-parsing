@@ -293,3 +293,20 @@ if __name__ == '__main__':
         else:
             print("Not a doctor-related sentence.")
         print("\n")
+
+"""Implement fuzzy match functionality with word vectors
+"""
+def word_vector_match(query, available_keys):
+    max_similarity = 0
+    max_key = None
+
+    q = nlp(query)
+
+    for key in available_keys:
+        k = nlp(key)
+        similarity = k.similarity(q)
+        if similarity > max_similarity:
+            max_similarity = similarity
+            max_key = key
+
+    return max_key, max_similarity 
