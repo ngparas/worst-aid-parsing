@@ -6,7 +6,7 @@ Vue.component('chat-item', {
           <div class="col-sm-8">
         <div class="panel panel-info" style="text-align: right">
         <div class="panel-heading">
-        <h3 class="panel-title">{{ chat.text }}</h3>
+        <h3 class="panel-title" v-html="chat.text"></h3>
     </div>
     </div>
           </div>
@@ -15,7 +15,7 @@ Vue.component('chat-item', {
           <div class="col-sm-8">
             <div class="panel panel-success" style="text-align: left">
         <div class="panel-heading">
-        <h3 class="panel-title">{{ chat.text }}</h3>
+        <h3 class="panel-title" v-html="chat.text"></h3>
     </div>
 </div>
           </div>
@@ -52,57 +52,62 @@ var mainapp = new Vue({
                 msgObj.textClass = response.body.textClass;
                 msgObj.textClassValue = response.body.value;
 
+                this.messageList.push(msgObj);
+                this.setProcedureIfNecessary(msgObj).then(msgObj => {
+                    this.userText = "";
 
-                if (this.procedureIndex === null) {
-                    // We don't have a graph loaded yet, get one
-                    this.getProcedure(this.userText);
-                    // should probably have done this before but whatever
-                    msgObj.textClass = 'graph';
-                    msgObj.textClassValue = 'graph';
-                    this.messageList[this.messageList.length - 1].textClass = 'graph';
-                    this.messageList[this.messageList.length - 1].textClassValue = 'graph';
-                }
-                this.addMessage(msgObj);
+                    switch(msgObj.textClass){
+                        case 'nav':
+                            if (msgObj.textClassValue == 'next') {
+                                if(this.innerIndex == null || (this.innerIndex + 1) >= this.procedureGraph[this.procedureIndex].substeps.length) {
+                                    this.procedureIndex += 1;
+                                    this.innerIndex = null;
+                                }
+                                else {
+                                    this.innerIndex += 1;
+                                }
+                                // this.messageList.push({"text": "Pretend I advanced the Graph"})
+                                this.renderStep();
+                                break;
+                            } else if (msgObj.textClassValue == 'prev') {
+                                // TODO : Goes back the previous main step instead of substep
+                                this.procedureIndex -= 1;
+                                this.innerIndex = null;
+                                // this.messageList.push({"text": "Pretend I moved back along the Graph"})
+                                this.renderStep();
+                                break;
+                            } else {
+                                // this.procedureIndex doesn't change
+                                this.messageList.push({"text": "I'm going to stay here in the Graph"})
+                                this.renderStep();
+                                break;
+                            }
+                            break;
+                            // some other stuff
+                        case 'question':
+                            // some other stuff
+                            this.messageList.push({"text": "You asked a question, let's pretend I responded"})
+                            break;
+                        case 'answer':
+                            // some more other stuff
+                            if (msgObj.textClassValue == true) {
+                                this.messageList.push({"text": "I heard you say yes"})
+                                break;
+                            } else {
+                                this.messageList.push({"text": "I heard you say no"})
+                                break;
+                            }
+                                break;
+                        default:
+                            // get here from the 'graph' type, so start at 0
+                            // this.messageList.push({"text": "<b>Hi</b> world."});
+                            this.renderStep();
+                            break;
 
-                switch(msgObj.textClass){
-                    case 'nav':
-                        if (msgObj.textClassValue == 'next') {
-                            // TODO : check bounds
-                            this.procedureIndex += 1;
-                            this.messageList.push({"text": "Pretend I advanced the Graph"})
-                            break;
-                        } else if (msgObj.textClassValue == 'prev') {
-                            // TODO : check bounds
-                            this.procedureIndex -= 1;
-                            this.messageList.push({"text": "Pretend I moved back along the Graph"})
-                            break;
-                        } else {
-                            // this.procedureIndex doesn't change
-                            this.messageList.push({"text": "I'm going to stay here in the Graph"})
-                            break;
-                        }
-                        break;
-                        // some other stuff
-                    case 'question':
-                        // some other stuff
-                        this.messageList.push({"text": "You asked a question, let's pretend I responded"})
-                        break;
-                    case 'answer':
-                        // some more other stuff
-                        if (msgObj.textClassValue == true) {
-                            this.messageList.push({"text": "I heard you say yes"})
-                            break;
-                        } else {
-                            this.messageList.push({"text": "I heard you say no"})
-                            break;
-                        }
-                            break;
-                    default:
-                        // get here from the 'graph' type, so start at 0
-                        console.log('asdf')
-                        break;
-
-                }
+                    }
+                }, err => {
+                    console.error('Error setting procedure graph.');
+                });
 
             }, response => {
                 // error callback
@@ -119,24 +124,82 @@ var mainapp = new Vue({
             this.userText = "";
         },
 
-        getProcedure: function(message) {
-            this.$http.get('/procedures?query='+message).then(response => {
+        renderStep: function() {
+            if(this.procedureIndex < 0) {
+                this.messageList.push({"text": "Beginning of Instructions"});
+                this.procedureIndex = -1;
+            }
+            else if(this.procedureIndex >= Object.keys(this.procedureGraph).length) {
+                this.messageList.push({"text": "End of Instructions."})
+                this.procedureIndex = Object.keys(this.procedureGraph).length;
+            }
+            else {
+                let step = this.procedureGraph[this.procedureIndex];
+                let msg = '';
+                switch(step.type) {
+                    case '911-conditional':
+                        msg = step.substeps.map(substep => "<li>"+substep.text+"</li>").join('');
+                        this.messageList.push({"text": step.text+"<br>"+"<ul>"+msg+"</ul>"});
+                        break;
+                    case 'doctor-conditional':
+                        msg = step.substeps.map(substep => "<li>"+substep.text+"</li>").join('');
+                        this.messageList.push({"text": step.text+"<br>"+"<ul>"+msg+"</ul>"});
+                        break;
+                    default:
+                        if(this.innerIndex == null) {
+                            this.messageList.push({"text": step.text})
+                            this.innerIndex = 0;
+                        }
+                        this.messageList.push({"text": step.substeps[this.innerIndex].text});
+                }
+            }
+        },
 
-                // get body data
-                this.messageList.push({
-                    "text": "I can help with " + toTitleCase(response.body.key.replace(/-/g, " ")),
-                    "isUser": false
-                });
-                this.procedureGraph = response.body.graph;
-                this.procedureIndex = 0
+        setProcedureIfNecessary: function(msgObj) {
+            let promise = new Promise((resolve, reject) => {
+                if (this.procedureIndex === null) {
+                    // We don't have a graph loaded yet, get one
+                    this.getProcedure(this.userText).then(response => {
+                        // get body data
+                        if(response.body.key === 'none'){
+                            this.messageList.push({
+                                "text": "I'm sorry, I don't recognize that. Please try again.",
+                                "isUser": false
+                            });
+                        }
+                        else{
+                                this.messageList.push({
+                                "text": "I can help with " + toTitleCase(response.body.key.replace(/-/g, " ")),
+                                "isUser": false
+                            });
+                            this.procedureGraph = response.body.graph;
+                            this.procedureIndex = 0
 
-            }, response => {
-                // error callback
-                this.messageList.push({
-                    "text": "Something went wrong, can you try again?",
-                    "isUser": false
-                });
+                            // Set graph
+                            msgObj.textClass = 'graph';
+                            msgObj.textClassValue = 'graph';
+                            this.messageList[this.messageList.length - 1].textClass = 'graph';
+                            this.messageList[this.messageList.length - 1].textClassValue = 'graph';
+                            resolve(msgObj);
+                        }
+                    }, err => {
+                        // error callback
+                        this.messageList.push({
+                            "text": "Something went wrong, can you try again?",
+                            "isUser": false
+                        });
+                        reject();
+                    });
+                }
+                else {
+                  resolve(msgObj);
+                }
             });
+            return promise;
+        },
+
+        getProcedure: function(message) {
+            return this.$http.get('/procedures?query='+message);
         }
     }
 })
