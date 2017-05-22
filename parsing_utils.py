@@ -165,6 +165,13 @@ def extract_doctor_clauses(sentence):
     """
     return {'substeps': [], 'type': 'doctor-conditional', 'text': sentence}
 
+def is_list(sentence):
+    """Given a sentence, returns whether it is a list header
+
+    Keyword arguments:
+    sentence -- the string that contains the sentence
+    """
+    return sentence.endswith(':') and not is_911(sentence) and not is_doctor(sentence)
 
 
 def is_loop_action(sentence):
@@ -309,4 +316,4 @@ def word_vector_match(query, available_keys):
             max_similarity = similarity
             max_key = key
 
-    return max_key, max_similarity 
+    return max_key, max_similarity

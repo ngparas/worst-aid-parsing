@@ -13,6 +13,7 @@ from parsing_utils import is_doctor
 from parsing_utils import extract_doctor_clauses
 from parsing_utils import is_loop_action
 from parsing_utils import extract_loop_action_clauses
+from parsing_utils import is_list
 
 
 def load_results(results_path):
@@ -111,6 +112,12 @@ def parse_procedure(procedure):
                 current_main_step = extract_doctor_clauses(step)
                 for substep in procedure.get('steps').get(step):
                     substep['type'] = 'doctor-conditional-list-item'
+                    current_main_step['substeps'].append(substep)
+                parsed_procedure += [current_main_step]
+            elif is_list(step):
+                current_main_step = {'text': step, 'type': 'list', 'substeps': []}
+                for substep in procedure.get('steps').get(step):
+                    substep['type'] = 'list-item'
                     current_main_step['substeps'].append(substep)
                 parsed_procedure += [current_main_step]
             else:

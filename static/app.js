@@ -145,6 +145,10 @@ var mainapp = new Vue({
                         msg = step.substeps.map(substep => "<li>"+substep.text+"</li>").join('');
                         this.messageList.push({"text": step.text+"<br>"+"<ul>"+msg+"</ul>"});
                         break;
+                    case 'list':
+                        msg = step.substeps.map(substep => "<li>"+substep.text+"</li>").join('');
+                        this.messageList.push({"text": step.text+"<br>"+"<ul>"+msg+"</ul>"});
+                        break;
                     default:
                         if(this.innerIndex == null) {
                             this.messageList.push({"text": step.text})
