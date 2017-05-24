@@ -12,8 +12,7 @@ DOCTOR_KEYPHRASES = ["call a doctor",
                      "when to see a doctor",
                      "when to call a doctor",
                      "see a doctor",
-                     "call the doctor",
-                     "airway"]
+                     "call the doctor"]
 LOOP_WORDS = ["until", "while"]
 
 def split_sentences(text):
@@ -29,6 +28,9 @@ def split_sentences(text):
     """
 
     parsed_text = nlp(text)
+    text_list = list(parsed_text.sents)
+    if text_list[0].text[0].isdigit() and text_list[0].text[-1] == ".":
+        return [text]
     return [i.text for i in parsed_text.sents]
 
 
