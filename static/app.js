@@ -40,6 +40,7 @@ var mainapp = new Vue({
         procedureGraph: [],
         procedureIndex: null,
         innerIndex: null,
+        waitingOnUser: false
     },
     methods: {
 
@@ -58,6 +59,10 @@ var mainapp = new Vue({
 
                     switch(msgObj.textClass){
                         case 'nav':
+                            if (this.waitingOnUser) {
+                                this.messageList.push({"text": "Please answer yes or no"});
+                                break;
+                            }
                             if (msgObj.textClassValue == 'next') {
                                 if(this.innerIndex == null || (this.innerIndex + 1) >= this.procedureGraph[this.procedureIndex].substeps.length) {
                                     this.procedureIndex += 1;
@@ -89,12 +94,26 @@ var mainapp = new Vue({
                             this.messageList.push({"text": "You asked a question, let's pretend I responded"})
                             break;
                         case 'answer':
+                            if (!this.waitingOnUser) {
+                                this.messageList.push({"text": "I don't understand, please try again"});
+                                break;
+                            }
                             // some more other stuff
                             if (msgObj.textClassValue == true) {
-                                this.messageList.push({"text": "I heard you say yes"})
+                                //this.messageList.push({"text": "I heard you say yes"})
+                                //this.waitingOnUser = false;
+                                this.renderStep();
                                 break;
                             } else {
-                                this.messageList.push({"text": "I heard you say no"})
+                                if(this.innerIndex == null || (this.innerIndex + 1) >= this.procedureGraph[this.procedureIndex].substeps.length) {
+                                    this.procedureIndex += 1;
+                                    this.innerIndex = null;
+                                }
+                                else {
+                                    this.innerIndex += 1;
+                                }
+                                this.waitingOnUser = false;
+                                this.renderStep();
                                 break;
                             }
                                 break;
@@ -149,12 +168,34 @@ var mainapp = new Vue({
                         msg = step.substeps.map(substep => "<li>"+substep.text+"</li>").join('');
                         this.messageList.push({"text": step.text+"<br>"+"<ul>"+msg+"</ul>"});
                         break;
-                    default:
+                    default: //likely an action
                         if(this.innerIndex == null) {
                             this.messageList.push({"text": step.text})
                             this.innerIndex = 0;
                         }
-                        this.messageList.push({"text": step.substeps[this.innerIndex].text});
+                        
+                        switch(step.substeps[this.innerIndex].type) {
+                            case 'conditional':
+                                if (!this.waitingOnUser) {
+                                    this.messageList.push(
+                                        {"text": step.substeps[this.innerIndex].conditionals.map(cond => cond).join(' or ')}
+                                    );
+                                    this.waitingOnUser = true;
+                                } else {
+                                    this.messageList.push(
+
+                                        {"text": step.substeps[this.innerIndex].nonconditionals}
+                                    );
+                                    this.waitingOnUser = false;
+                                }
+                                break;
+                            default:
+                                this.messageList.push({"text": step.substeps[this.innerIndex].text});
+                        }
+
+
+
+                        //this.messageList.push({"text": step.substeps[this.innerIndex].text});
                 }
             }
         },
