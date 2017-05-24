@@ -12,7 +12,8 @@ DOCTOR_KEYPHRASES = ["call a doctor",
                      "when to see a doctor",
                      "when to call a doctor",
                      "see a doctor",
-                     "call the doctor"]
+                     "call the doctor",
+                     "airway"]
 LOOP_WORDS = ["until", "while"]
 
 def split_sentences(text):
