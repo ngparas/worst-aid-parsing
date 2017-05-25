@@ -129,6 +129,12 @@ def extract_conditional_clauses(sentence):
         min_match_index = None
         max_match_index = None
 
+    for i, result in enumerate(cond_results):
+        if " n't " in result:
+            cond_results[i] = result.replace(" n't ", " not ")
+    if rest.startswith(", "):
+        rest = rest[len(", "):]
+        rest = rest[0].upper() + rest[1:]
     return {"conditionals": cond_results,
             "nonconditionals": rest}
 
