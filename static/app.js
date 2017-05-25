@@ -55,7 +55,6 @@ var mainapp = new Vue({
 
                 this.messageList.push(msgObj);
                 this.setProcedureIfNecessary(msgObj).then(msgObj => {
-                    this.userText = "";
 
                     switch(msgObj.textClass){
                         case 'nav':
@@ -91,7 +90,32 @@ var mainapp = new Vue({
                             // some other stuff
                         case 'question':
                             // some other stuff
-                            this.messageList.push({"text": "You asked a question, let's pretend I responded"})
+
+                            this.$http.post('http://ec2-34-223-228-62.us-west-2.compute.amazonaws.com:5000/',
+                                            {"userText": this.userText,
+                                             "step": this.procedureGraph[this.procedureIndex]}).then(response => {
+                                if (response.body.type == "image") {
+
+                                this.messageList.push({"text": response.body.text + '</br><img src='+ response.body.mediaLink+'>'});
+
+                                } else if (response.body.type == "video") {
+
+                                this.messageList.push({"text": response.body.text + "</br>" + response.body.mediaLink});
+
+                                } else {
+
+                                this.messageList.push({"text": response.body.text});
+
+                                }
+                            }, response => {
+                                // error callback
+                                this.messageList.push({
+                                    "text": "Something went wrong, can you try again?",
+                                    "isUser": false
+                                });
+                            });
+
+
                             break;
                         case 'answer':
                             if (!this.waitingOnUser) {
@@ -124,6 +148,7 @@ var mainapp = new Vue({
                             break;
 
                     }
+                    this.userText = "";
                 }, err => {
                     console.error('Error setting procedure graph.');
                 });
