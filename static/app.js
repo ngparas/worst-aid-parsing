@@ -149,7 +149,7 @@ var mainapp = new Vue({
                 this.procedureIndex = -1;
             }
             else if(this.procedureIndex >= Object.keys(this.procedureGraph).length) {
-                this.messageList.push({"text": "End of Instructions."})
+                this.messageList.push({"text": "End of Instructions."});
                 this.procedureIndex = Object.keys(this.procedureGraph).length;
             }
             else {
@@ -173,7 +173,7 @@ var mainapp = new Vue({
                             this.messageList.push({"text": step.text})
                             this.innerIndex = 0;
                         }
-                        
+
                         switch(step.substeps[this.innerIndex].type) {
                             case 'conditional':
                                 if (!this.waitingOnUser) {
@@ -213,7 +213,7 @@ var mainapp = new Vue({
                             });
                         }
                         else{
-                                this.messageList.push({
+                            this.messageList.push({
                                 "text": "I can help with " + toTitleCase(response.body.key.replace(/-/g, " ")),
                                 "isUser": false
                             });
