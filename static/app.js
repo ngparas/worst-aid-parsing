@@ -203,7 +203,7 @@ var mainapp = new Vue({
                             case 'conditional':
                                 if (!this.waitingOnUser) {
                                     this.messageList.push(
-                                        {"text": step.substeps[this.innerIndex].conditionals.map(cond => cond).join(' or ')}
+                                        {"text": step.substeps[this.innerIndex].conditionals.map(cond => cond).join(' or ') + ', respond yes otherwise respond no.'}
                                     );
                                     this.waitingOnUser = true;
                                 } else {
