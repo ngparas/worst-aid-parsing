@@ -85,6 +85,7 @@ var mainapp = new Vue({
 
                             this.$http.post('http://ec2-34-223-228-62.us-west-2.compute.amazonaws.com:5000/',
                                             {"userText": this.userText,
+                                             "innerIndex": this.innerIndex,
                                              "step": this.procedureGraph[this.procedureIndex]}).then(response => {
                                 if (response.body.type == "image") {
 
