@@ -1,25 +1,17 @@
 Vue.component('chat-item', {
     props: ['chat'],
     template: `
-        <div v-if="chat.isUser" class="row">
-          <div class="col-sm-4"></div>
-          <div class="col-sm-8">
-        <div class="panel panel-info" style="text-align: right">
-        <div class="panel-heading">
-        <h3 class="panel-title" v-html="chat.text"></h3>
-    </div>
-    </div>
+        <div v-if="chat.isUser">
+          <div class="user-msg">
+            <b>You</b></br>
+            <p v-html="chat.text"></p>
           </div>
         </div>
-        <div v-else class="row">
-          <div class="col-sm-8">
-            <div class="panel panel-success" style="text-align: left">
-        <div class="panel-heading">
-        <h3 class="panel-title" v-html="chat.text"></h3>
-    </div>
-</div>
+        <div v-else>
+          <div class="bot-msg">
+            <b>First Aid Bot</b></br>
+            <p v-html="chat.text"></p>
           </div>
-          <div class="col-sm-4"></div>
         </div>
         `
 })
