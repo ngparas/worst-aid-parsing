@@ -176,20 +176,20 @@ var mainapp = new Vue({
                 let msg = '';
                 switch(step.type) {
                     case '911-conditional':
-                        msg = step.substeps.map(substep => "<li>"+substep.text+"</li>").join('');
-                        this.messageList.push({"text": step.text+"<br>"+"<ul>"+msg+"</ul>"});
+                        msg = step.substeps.map(substep => "<li>"+substep.text.replace(',.', '.')+"</li>").join('');
+                        this.messageList.push({"text": step.text.replace(',.', '.')+"<br>"+"<ul>"+msg+"</ul>"});
                         break;
                     case 'doctor-conditional':
-                        msg = step.substeps.map(substep => "<li>"+substep.text+"</li>").join('');
-                        this.messageList.push({"text": step.text+"<br>"+"<ul>"+msg+"</ul>"});
+                        msg = step.substeps.map(substep => "<li>"+substep.text.replace(',.', '.')+"</li>").join('');
+                        this.messageList.push({"text": step.text.replace(',.', '.')+"<br>"+"<ul>"+msg+"</ul>"});
                         break;
                     case 'list':
-                        msg = step.substeps.map(substep => "<li>"+substep.text+"</li>").join('');
+                        msg = step.substeps.map(substep => "<li>"+substep.text.replace(',.', '.')+"</li>").join('');
                         this.messageList.push({"text": step.text+"<br>"+"<ul>"+msg+"</ul>"});
                         break;
                     default: //likely an action
                         if(this.innerIndex == null) {
-                            this.messageList.push({"text": step.text})
+                            this.messageList.push({"text": step.text.replace(',.', '.')})
                             this.innerIndex = 0;
                         }
 
@@ -203,13 +203,13 @@ var mainapp = new Vue({
                                 } else {
                                     this.messageList.push(
 
-                                        {"text": step.substeps[this.innerIndex].nonconditionals}
+                                        {"text": step.substeps[this.innerIndex].nonconditionals.replace(',.', '.')}
                                     );
                                     this.waitingOnUser = false;
                                 }
                                 break;
                             default:
-                                this.messageList.push({"text": step.substeps[this.innerIndex].text});
+                                this.messageList.push({"text": step.substeps[this.innerIndex].text.replace(',.', '.')});
                         }
 
 
