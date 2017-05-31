@@ -92,7 +92,7 @@ var mainapp = new Vue({
 
                                 } else if (response.body.type == "video") {
 
-                                this.messageList.push({"text": response.body.text + "</br></br><iframe width='420' height='315' src='" + response.body.mediaLink + "'></iframe>"});
+                                this.messageList.push({"text": response.body.text + "</br></br><iframe width='420' height='315' src='" + response.body.mediaLink + "frameborder="0"'></iframe>"});
 
                                 } else {
 
