@@ -172,6 +172,7 @@ var mainapp = new Vue({
             }
             else {
                 let step = this.procedureGraph[this.procedureIndex];
+                step.text = step.text.replace(',.', '.');
                 let msg = '';
                 switch(step.type) {
                     case '911-conditional':
