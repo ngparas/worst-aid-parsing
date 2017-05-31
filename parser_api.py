@@ -1,14 +1,14 @@
 from flask import Flask
 from flask import request
 from flask import render_template
-# from fuzzywuzzy import process
-from parsing_utils import word_vector_match
+from fuzzywuzzy import process
+# from parsing_utils import word_vector_match
 import json
 
 import redis
 
 app = Flask(__name__)
-redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
+redis_client = redis.StrictRedis(host='10.0.206.32', port=6379, db=0)
 
 MATCH_THRESHOLD = 0.5
 
@@ -22,9 +22,9 @@ def get_procedure():
 
     available_keys = [i.decode('utf-8').replace('-', ' ') for i in redis_client.keys()]
     # fuzzymatch
-    # target_key, target_ratio = process.extractOne(query, available_keys)
+    target_key, target_ratio = process.extractOne(query, available_keys)
 
-    target_key, target_ratio = word_vector_match(query, available_keys)
+    # target_key, target_ratio = word_vector_match(query, available_keys)
     print(target_ratio, target_key)
     if target_ratio < MATCH_THRESHOLD:
         return json.dumps({'key': 'none'})
@@ -64,4 +64,4 @@ def classify_text():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
