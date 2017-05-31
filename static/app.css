@@ -1,13 +1,63 @@
 body {
-  padding-top: 80px;
+  padding-top: 40px;
+  font-family: Roboto Condensed, Helvetica, Arial;
+  background: rgba(233, 233, 233, 1);
 }
+
+#fader {
+  background: linear-gradient(to bottom, rgba(233, 233, 233, 0.2), rgba(233, 233, 233, 0));
+  top: 25px;
+  height: 15%;
+  width: 100%;
+  z-index: 3;
+  position: absolute;
+}
+
+.user-msg {
+  padding: 10px;
+  width: 100%;
+  text-align: right;
+  background: rgba(250, 250, 250, 1);
+  color: rgba(121, 121, 121, 1);
+  font-size: 22;
+
+}
+
+.bot-msg {
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  background: rgba(242, 242, 242, 1);
+  color: rgba(121, 121, 121, 1);
+  font-size: 22;
+
+}
+
+
 .chat-body {
-  padding: 40px 15px;
+  padding: 5px 5px;
   text-align: center;
   height: 100%;
   overflow:auto;
 }
 
 #mainapp {
-    padding: 20 20 20 20;
+    padding: 5;
+}
+
+.navbar-inverse .navbar-brand:hover, 
+.navbar-inverse .navbar-brand:focus {
+  background-color: transparent;
+  color: #999999;
+}
+
+.navbar-brand {
+  font-size: 26;
+  padding: 25 0 0 0;
+
+}
+
+.navbar {
+  height: 70px;
+
 }

@@ -22,20 +22,22 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <div><h3 style="color: white">First Aid Bot</h3></div>
+          <div class="navbar-brand">First Aid Bot</div>
         </div>
       </div>
     </nav>
 
+    <div id="fader"></div>
+
     <div id="mainapp">
       <div class="container">
-        <div class="well" style="height: 80%">
+        <div style="height: 80%">
         <div class="chat-body" v-chat-scroll>
-          <!--<h1>Lorem Ipsum</h1>-->
+          </br></br></br></br></br></br>
           <chat-item v-for="item in messageList" v-bind:chat="item"></chat-item>
         </div>
         </div>
-        <input v-on:keyup.enter="submitMessage" v-model="userText" type="text" class="form-control" aria-describedby="basic-addon1">
+        <input v-on:keyup.enter="submitMessage" v-model="userText" type="text" class="form-control" aria-describedby="basic-addon1" style="font-size: 22;">
 
       </div>
     </div>
