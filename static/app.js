@@ -96,11 +96,11 @@ var mainapp = new Vue({
                                              "step": this.procedureGraph[this.procedureIndex]}).then(response => {
                                 if (response.body.type == "image") {
 
-                                this.messageList.push({"text": response.body.text + '</br><img src='+ response.body.mediaLink+'>'});
+                                this.messageList.push({"text": response.body.text + '</br></br><img src='+ response.body.mediaLink+' style="max-height: 400px; max-width: 400px;">'});
 
                                 } else if (response.body.type == "video") {
 
-                                this.messageList.push({"text": response.body.text + "</br>" + response.body.mediaLink});
+                                this.messageList.push({"text": response.body.text + "</br></br><iframe width='420' height='315' src='" + response.body.mediaLink + "'></iframe>"});
 
                                 } else {
 
